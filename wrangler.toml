@@ -1,6 +1,6 @@
-name = “totb”
+name = "totb"
 main = "worker.js"
-account_id = "<Azaan1199@gmail.com>"
+account_id = "eb2d263306afc688c362150c57b3c28b"
 compatibility_date = "2023-01-01"
 
 [site]
