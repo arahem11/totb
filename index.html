@@ -300,6 +300,24 @@
         
         let vignetteIndex = 0;
 
+        // Initialize the home image properly
+        function initializeHome() {
+            let imgViewer = document.getElementById('image-viewer');
+            let container = document.getElementById('image-container');
+            
+            // Make sure it's styled correctly for home
+            container.style.background = "black";
+            imgViewer.style.width = "100vw";
+            imgViewer.style.height = "100vh";
+            imgViewer.style.objectFit = "cover";
+            
+            // Remove any classes that might be applied
+            imgViewer.className = "";
+            
+            // Set src just to be sure
+            imgViewer.src = "pdfs/png_0.png";
+        }
+
         function loadImage(imageIndex) {
             if (isTransitioning) return;
             isTransitioning = true;
@@ -495,6 +513,11 @@
             if (event.key === "ArrowLeft") prevImage();
             if (event.key === "ArrowRight") nextImage();
             if (event.key === "Escape") closeAllDropdowns();
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            initializeHome();
         });
     </script>
 </body>
