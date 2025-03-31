@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Portfolio</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@600&family=Inter:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Source Serif Pro', serif; }
         body { background: black; text-align: center; overflow: hidden; position: relative; color: white; }
@@ -22,77 +22,103 @@
         
         .image-wrapper { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
         
-        img { max-width: 100vw; max-height: 100vh; object-fit: cover; transition: opacity 0.3s ease; }
-
-        .menu-trigger-area {
+        img { 
+            max-width: 100vw; 
+            max-height: 100vh; 
+            object-fit: cover; 
+            transition: opacity 0.3s ease; 
+        }
+        
+        .framed-image {
+            border: 1px solid black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 90% !important;
+            max-height: 90% !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain;
+        }
+        
+        .tab-trigger-area {
             position: fixed;
             top: 0;
             left: 0;
-            width: 80px;
-            height: 80px;
+            width: 100%;
+            height: 100px;
             z-index: 9;
         }
 
-        .menu { 
-            position: fixed; 
-            top: 15px; 
-            left: 15px; 
-            background: transparent; 
-            color: black; 
-            padding: 10px; 
-            cursor: pointer; 
-            font-size: 22px; 
-            transition: all 0.3s ease;
-            display: flex; 
-            flex-direction: column;
-            align-items: center; 
-            justify-content: center; 
-            width: 40px; 
-            height: 40px; 
+        .tab-bar {
+            position: fixed;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             z-index: 10;
+            padding: 0 20px;
             opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
             pointer-events: none;
         }
         
-        .menu-trigger-area:hover .menu,
-        .menu.active {
+        .tab-trigger-area:hover .tab-bar,
+        .tab-bar.active {
             opacity: 1;
+            transform: translateY(0);
             pointer-events: all;
         }
         
-        .menu-line {
-            width: 24px;
-            height: 2px;
-            background-color: black;
-            margin: 2px 0;
+        .tabs {
+            display: flex;
+            gap: 40px;
+            height: 100%;
+        }
+        
+        .tab {
+            position: relative;
+            color: #f8f8f8;
+            font-family: 'Source Serif Pro', serif;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 45px;
+            width: auto;
+            min-width: 45px;
+            padding: 0 20px;
+            background: rgba(57, 57, 58, 0.95);
+            border-radius: 25px;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .menu.active .menu-line:nth-child(1) {
-            transform: translateY(6px) rotate(45deg);
+        .tab:hover {
+            background: #39393A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
         }
         
-        .menu.active .menu-line:nth-child(2) {
-            opacity: 0;
+        .tab.active {
+            background: #39393A;
         }
         
-        .menu.active .menu-line:nth-child(3) {
-            transform: translateY(-6px) rotate(-45deg);
-        }
-        
-        .menu:hover .menu-line { background-color: #333; }
-
         .dropdown-container {
             position: fixed;
-            top: 15px;
-            left: 15px;
+            top: 95px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             color: black;
             list-style: none;
             padding: 0;
-            border-radius: 12px;
+            border-radius: 15px;
             z-index: 9;
             width: 0;
             height: 0;
@@ -101,16 +127,15 @@
             opacity: 0;
             transform: translateY(-10px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: 'Inter', sans-serif;
         }
         
         .dropdown-container.show { 
             width: 300px;
             height: auto;
-            max-height: 75vh;
+            max-height: 70vh;
             opacity: 1;
             transform: translateY(0);
-            padding: 60px 0 20px 0;
+            padding: 15px 0;
             overflow-y: auto;
         }
         
@@ -127,16 +152,6 @@
             border-radius: 4px;
         }
         
-        .dropdown-header {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #777;
-            padding: 8px 25px;
-            margin-top: 10px;
-            font-weight: 500;
-        }
-        
         .dropdown li { 
             padding: 12px 25px; 
             cursor: pointer; 
@@ -145,7 +160,7 @@
             text-align: left;
             transition: all 0.2s ease;
             position: relative;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Source Serif Pro', serif;
             border: none;
         }
         
@@ -157,45 +172,6 @@
             background: rgba(0, 0, 0, 0.1);
         }
         
-        .dropdown-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-        
-        .dropdown-arrow {
-            font-size: 14px;
-            transition: transform 0.3s ease;
-        }
-        
-        .dropdown li.active .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .sub-dropdown { 
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .sub-dropdown.show { 
-            max-height: 500px;
-            padding-bottom: 8px;
-        }
-        
-        .sub-dropdown li {
-            padding: 10px 15px 10px 35px;
-            font-size: 15px;
-            opacity: 0.9;
-        }
-        
-        .sub-dropdown li:hover {
-            opacity: 1;
-        }
-        
         .dropdown-divider {
             height: 1px;
             background: rgba(0, 0, 0, 0.06);
@@ -203,84 +179,91 @@
         }
         
         @media (max-width: 768px) {
-            .menu-trigger-area {
-                width: 60px;
-                height: 60px;
+            .tabs {
+                gap: 15px;
+            }
+            
+            .tab {
+                height: 40px;
+                padding: 0 15px;
+                font-size: 14px;
             }
             
             .dropdown-container.show {
                 width: 280px;
                 max-height: 80vh;
             }
-            
-            .dropdown li {
-                padding: 12px 20px;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="menu-trigger-area">
-        <div class="menu" id="menu-button" onclick="toggleMenu()">
-            <div class="menu-line"></div>
-            <div class="menu-line"></div>
-            <div class="menu-line"></div>
+    <div class="tab-trigger-area">
+        <div class="tab-bar">
+            <div class="tabs">
+                <div class="tab" onclick="loadImage(0)">Home</div>
+                <div class="tab has-dropdown" onclick="toggleDropdown('ways-menu', this)">Ways</div>
+                <div class="tab has-dropdown" onclick="toggleDropdown('sort-menu', this)">Sort By</div>
+                <div class="tab has-dropdown" onclick="toggleDropdown('practice-menu', this)">Putting It Into Practice</div>
+                <div class="tab" onclick="loadImage(58)">Endnotes</div>
+            </div>
         </div>
     </div>
     
-    <ul class="dropdown-container" id="dropdown-menu">
-        <li onclick="loadImage(0)">Home</li>
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-header">Ways</div>
-        <li onclick="toggleSubDropdown('ways-menu', this)" class="dropdown-parent">
-            <div class="dropdown-title">
-                <span>Learning Environment</span>
-                <span class="dropdown-arrow">▾</span>
-            </div>
-        </li>
-        <ul class="dropdown sub-dropdown" id="ways-menu">
-            <li onclick="loadImage(3)">Child-Scale</li>
-            <li onclick="loadImage(5)">Flexible Spaces</li>
-            <li onclick="loadImage(7)">Home-Like Environments</li>
-            <li onclick="loadImage(9)">Legibility</li>
-            <li onclick="loadImage(11)">Access Control</li>
-            <li onclick="loadImage(13)">Natural Surveillance</li>
-            <li onclick="loadImage(15)">Personal Space</li>
-            <li onclick="loadImage(17)">Student Participation</li>
-            <li onclick="loadImage(19)">Universal Design</li>
-            <li onclick="loadImage(21)">Accessibility</li>
-            <li onclick="loadImage(25)">Space for Pets</li>
-            <li onclick="loadImage(27)">Biophilic Design</li>
-            <li onclick="loadImage(29)">Natural Ventilation</li>
-            <li onclick="loadImage(31)">Outdoor Learning Space</li>
-            <li onclick="loadImage(33)">Ergonomics</li>
-            <li onclick="loadImage(35)">Sensory Stimulation</li>
-            <li onclick="loadImage(37)">Social Spaces</li>
-            <li onclick="loadImage(39)">Noise Reduction</li>
-            <li onclick="loadImage(41)">Small Learning Community</li>
-            <li onclick="loadImage(43)">Color</li>
-            <li onclick="loadImage(45)">Natural Light</li>
-            <li onclick="loadImage(47)">Privacy Niches</li>
-            <li onclick="loadImage(49)">Engaging Spaces</li>
-            <li onclick="loadImage(51)">Thermal Comfort</li>
-        </ul>
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-header">Analysis</div>
-        <li onclick="toggleSubDropdown('sort-menu', this)" class="dropdown-parent">
-            <div class="dropdown-title">
-                <span>Sort By</span>
-                <span class="dropdown-arrow">▾</span>
-            </div>
-        </li>
-        <ul class="dropdown sub-dropdown" id="sort-menu">
-            <li onclick="loadImage(53)">Spatial Modification Matrix</li>
-            <li onclick="loadImage(54)">Priority</li>
-            <li onclick="loadImage(55)">Cost</li>
-            <li onclick="loadImage(56)">Universality</li>
-            <li onclick="loadImage(57)">Averages</li>
-        </ul>
-        <div class="dropdown-divider"></div>
-        <li onclick="loadImage(58)">Endnotes</li>
+    <ul class="dropdown-container dropdown" id="ways-menu">
+        <li onclick="loadImage(3)">1. Child-Scale</li>
+        <li onclick="loadImage(5)">2. Flexible Spaces</li>
+        <li onclick="loadImage(7)">3. Home-Like Environments</li>
+        <li onclick="loadImage(9)">4. Legibility</li>
+        <li onclick="loadImage(11)">5. Access Control</li>
+        <li onclick="loadImage(13)">6. Natural Surveillance</li>
+        <li onclick="loadImage(15)">7. Personal Space</li>
+        <li onclick="loadImage(17)">8. Student Participation</li>
+        <li onclick="loadImage(19)">9. Universal Design</li>
+        <li onclick="loadImage(21)">10. Accessibility</li>
+        <li onclick="loadImage(25)">11. Space for Pets</li>
+        <li onclick="loadImage(27)">12. Biophilic Design</li>
+        <li onclick="loadImage(29)">13. Natural Ventilation</li>
+        <li onclick="loadImage(31)">14. Outdoor Learning Space</li>
+        <li onclick="loadImage(33)">15. Ergonomics</li>
+        <li onclick="loadImage(35)">16. Sensory Stimulation</li>
+        <li onclick="loadImage(37)">17. Social Spaces</li>
+        <li onclick="loadImage(39)">18. Noise Reduction</li>
+        <li onclick="loadImage(41)">19. Small Learning Community</li>
+        <li onclick="loadImage(43)">20. Color</li>
+        <li onclick="loadImage(45)">21. Natural Light</li>
+        <li onclick="loadImage(47)">22. Privacy Niches</li>
+        <li onclick="loadImage(49)">23. Engaging Spaces</li>
+        <li onclick="loadImage(51)">24. Thermal Comfort</li>
+    </ul>
+    
+    <ul class="dropdown-container dropdown" id="sort-menu">
+        <li onclick="loadImage(53)">Spatial Modification Matrix</li>
+        <li onclick="loadImage(54)">Priority</li>
+        <li onclick="loadImage(55)">Cost</li>
+        <li onclick="loadImage(56)">Universality</li>
+        <li onclick="loadImage(57)">Averages</li>
+    </ul>
+    
+    <ul class="dropdown-container dropdown" id="practice-menu">
+        <li style="font-weight: 600; pointer-events: none; color: #555;">Phase 1</li>
+        <li onclick="loadVignette('Cafeteria')">Cafeteria</li>
+        <li onclick="loadVignette('Art_Block')">Art Block</li>
+        <li onclick="loadVignette('Classroom')">Classroom</li>
+        
+        <li style="font-weight: 600; pointer-events: none; color: #555; margin-top: 15px;">Phase 2</li>
+        <li onclick="loadVignette('Garden_View')">Garden View</li>
+        <li onclick="loadVignette('Outdoor_Classroom')">Outdoor Classroom</li>
+        <li onclick="loadVignette('Washroom')">Washroom</li>
+        
+        <li style="font-weight: 600; pointer-events: none; color: #555; margin-top: 15px;">Phase 3</li>
+        <li onclick="loadVignette('Football_Field')">Football Field</li>
+        <li onclick="loadVignette('Multipurpose_Hall')">Multipurpose Hall</li>
+        <li onclick="loadVignette('Connection point_Canteen')">Connection point + Canteen</li>
+        
+        <li style="font-weight: 600; pointer-events: none; color: #555; margin-top: 15px;">Phase 4</li>
+        <li onclick="loadVignette('Interactive_Play_Area')">Interactive Play Area</li>
+        <li onclick="loadVignette('Chabutra_and_Study_Pods')">Chabutra and Study Pods</li>
+        <li onclick="loadVignette('Amphitheater_space')">Amphitheater space</li>
     </ul>
     
     <div class="container" id="image-container">
@@ -293,20 +276,40 @@
         let totalImages = 52;
         let index = 0;
         let isTransitioning = false;
+        let currentMode = "ways"; // Track whether we're viewing ways or vignettes
         const container = document.getElementById('image-container');
-        const menuButton = document.getElementById('menu-button');
+        const tabBar = document.querySelector('.tab-bar');
         const leftArrowCursor = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='12' x2='5' y2='12'></line><polyline points='12 19 5 12 12 5'></polyline></svg>\") 20 20, auto";
         const rightArrowCursor = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='5' y1='12' x2='19' y2='12'></line><polyline points='12 5 19 12 12 19'></polyline></svg>\") 20 20, auto";
+        
+        // Define the vignette sets for navigation
+        const vignettes = [
+            {phase: 1, name: 'Cafeteria', filename: 'Cafeteria'},
+            {phase: 1, name: 'Art Block', filename: 'Art_Block'},
+            {phase: 1, name: 'Classroom', filename: 'Classroom'},
+            {phase: 2, name: 'Garden View', filename: 'Garden_View'},
+            {phase: 2, name: 'Outdoor Classroom', filename: 'Outdoor_Classroom'},
+            {phase: 2, name: 'Washroom', filename: 'Washroom'},
+            {phase: 3, name: 'Football Field', filename: 'Football_Field'},
+            {phase: 3, name: 'Multipurpose Hall', filename: 'Multipurpose_Hall'},
+            {phase: 3, name: 'Connection point + Canteen', filename: 'Connection point_Canteen'},
+            {phase: 4, name: 'Interactive Play Area', filename: 'Interactive_Play_Area'},
+            {phase: 4, name: 'Chabutra and Study Pods', filename: 'Chabutra_and_Study_Pods'},
+            {phase: 4, name: 'Amphitheater space', filename: 'Amphitheater_space'}
+        ];
+        
+        let vignetteIndex = 0;
 
         function loadImage(imageIndex) {
             if (isTransitioning) return;
             isTransitioning = true;
             
+            currentMode = "ways"; // Switch to ways mode
             let imgViewer = document.getElementById('image-viewer');
             let container = document.getElementById('image-container');
             
-            // Close menu when selecting an image
-            closeMenu();
+            // Close any open dropdowns
+            closeAllDropdowns();
             
             // Add fade out effect
             imgViewer.style.opacity = '0.3';
@@ -325,6 +328,7 @@
                 }
                 
                 imgViewer.src = `pdfs/png_${imageIndex}.png`;
+                imgViewer.className = ""; // Remove any classes
                 index = imageIndex;
                 
                 // Add fade in effect
@@ -336,49 +340,116 @@
         }
 
         function prevImage() {
-            if (index > 0) {
-                index--;
-                loadImage(index);
+            if (isTransitioning) return;
+            
+            if (currentMode === "vignettes") {
+                prevVignette();
+            } else {
+                if (index > 0) {
+                    index--;
+                    loadImage(index);
+                }
             }
         }
 
         function nextImage() {
-            index = (index < totalImages) ? index + 1 : 0;
-            loadImage(index);
-        }
-
-        function toggleMenu() {
-            let menu = document.getElementById('dropdown-menu');
-            menu.classList.toggle('show');
-            menuButton.classList.toggle('active');
+            if (isTransitioning) return;
+            
+            if (currentMode === "vignettes") {
+                nextVignette();
+            } else {
+                index = (index < totalImages) ? index + 1 : 0;
+                loadImage(index);
+            }
         }
         
-        function closeMenu() {
-            let menu = document.getElementById('dropdown-menu');
-            menu.classList.remove('show');
-            menuButton.classList.remove('active');
+        function prevVignette() {
+            if (vignetteIndex > 0) {
+                vignetteIndex--;
+                loadVignetteByIndex(vignetteIndex);
+            }
+        }
+        
+        function nextVignette() {
+            if (vignetteIndex < vignettes.length - 1) {
+                vignetteIndex++;
+                loadVignetteByIndex(vignetteIndex);
+            }
+        }
+        
+        function loadVignetteByIndex(idx) {
+            loadVignette(vignettes[idx].filename);
         }
 
-        function toggleSubDropdown(id, element) {
-            let menu = document.getElementById(id);
-            let isActive = menu.classList.contains('show');
+        function toggleDropdown(id, tabElement) {
+            const dropdown = document.getElementById(id);
+            const isActive = dropdown.classList.contains('show');
             
-            // Close all dropdowns first
-            document.querySelectorAll('.sub-dropdown').forEach(dropdown => {
+            // Close all dropdowns
+            closeAllDropdowns();
+            
+            // If it wasn't active, show it
+            if (!isActive) {
+                dropdown.classList.add('show');
+                tabElement.classList.add('active');
+                tabBar.classList.add('active');
+                
+                // Position dropdown under the tab
+                const tabRect = tabElement.getBoundingClientRect();
+                dropdown.style.left = (tabRect.left + tabRect.width/2 - 150) + 'px';
+            }
+        }
+        
+        function closeAllDropdowns() {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Hide all dropdowns
+            document.querySelectorAll('.dropdown-container').forEach(dropdown => {
                 dropdown.classList.remove('show');
             });
             
-            document.querySelectorAll('.dropdown-parent').forEach(parent => {
-                parent.classList.remove('active');
-            });
+            tabBar.classList.remove('active');
+        }
+
+        function loadVignette(name) {
+            if (isTransitioning) return;
+            isTransitioning = true;
             
-            // Then open the selected one if it wasn't active
-            if (!isActive) {
-                menu.classList.add('show');
-                if (element) {
-                    element.classList.add('active');
-                }
-            }
+            // Set the current mode to vignettes
+            currentMode = "vignettes";
+            
+            // Find the index of this vignette in our array
+            vignetteIndex = vignettes.findIndex(v => v.filename === name);
+            if (vignetteIndex === -1) vignetteIndex = 0;
+            
+            let imgViewer = document.getElementById('image-viewer');
+            let container = document.getElementById('image-container');
+            
+            // Close any open dropdowns
+            closeAllDropdowns();
+            
+            // Add fade out effect
+            imgViewer.style.opacity = '0.3';
+            
+            setTimeout(() => {
+                container.style.background = "white";
+                imgViewer.style.width = "98vw";
+                imgViewer.style.height = "98vh";
+                imgViewer.style.objectFit = "contain";
+                
+                // Load the vignette image
+                imgViewer.src = `Vignettes/${name}.jpg`;
+                imgViewer.className = "framed-image"; // Add the frame class
+                
+                // Add fade in effect
+                setTimeout(() => {
+                    imgViewer.style.opacity = '1';
+                    isTransitioning = false;
+                }, 100);
+            }, 200);
         }
 
         // Update cursor based on position
@@ -395,8 +466,8 @@
         
         // Navigation on click
         container.addEventListener('click', function(e) {
-            // Don't navigate if clicking on menu or its children
-            if (e.target.closest('.menu-trigger-area') || e.target.closest('.dropdown-container')) {
+            // Don't navigate if clicking on tab bar or its children
+            if (e.target.closest('.tab-trigger-area') || e.target.closest('.dropdown-container')) {
                 return;
             }
             
@@ -415,15 +486,15 @@
         // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
             if (!event.target.closest('.dropdown-container') && 
-                !event.target.closest('.menu-trigger-area')) {
-                closeMenu();
+                !event.target.closest('.has-dropdown')) {
+                closeAllDropdowns();
             }
         });
 
         document.addEventListener("keydown", function(event) {
             if (event.key === "ArrowLeft") prevImage();
             if (event.key === "ArrowRight") nextImage();
-            if (event.key === "Escape") closeMenu();
+            if (event.key === "Escape") closeAllDropdowns();
         });
     </script>
 </body>
