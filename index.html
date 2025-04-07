@@ -278,7 +278,7 @@
         let totalImages = 52;
         let index = 0;
         let isTransitioning = false;
-        let currentMode = "ways"; // Track whether we're viewing ways or vignettes
+        let currentMode = "ways"; // Track whether we're viewing ways, vignettes, or sort
         const container = document.getElementById('image-container');
         const tabBar = document.querySelector('.tab-bar');
         const leftArrowCursor = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='12' x2='5' y2='12'></line><polyline points='12 19 5 12 12 5'></polyline></svg>\") 20 20, auto";
@@ -300,7 +300,11 @@
             {phase: 4, name: 'Amphitheater space', filename: 'Amphitheater_space'}
         ];
         
+        // Define the "Sort By" set for navigation
+        const sortBySet = [53, 54, 55, 56, 57];
+        
         let vignetteIndex = 0;
+        let sortIndex = 0;
 
         // Initialize the home image properly
         function initializeHome() {
@@ -318,13 +322,25 @@
             
             // Set src just to be sure
             imgViewer.src = "pdfs/png_0.png";
+            currentMode = "ways"; // Start in ways mode
+            index = 0; // Reset ways index
         }
 
+        // Load regular images (Ways, Sort By, Endnotes)
         function loadImage(imageIndex) {
             if (isTransitioning) return;
             isTransitioning = true;
             
-            currentMode = "ways"; // Switch to ways mode
+            // Determine mode based on imageIndex range
+            if (sortBySet.includes(imageIndex)) {
+                currentMode = "sort";
+                sortIndex = sortBySet.indexOf(imageIndex);
+            } else {
+                 // Any other image loaded directly resets to ways mode
+                 // (Home, Ways, Endnotes will trigger this)
+                currentMode = "ways";
+            }
+            
             let imgViewer = document.getElementById('image-viewer');
             let container = document.getElementById('image-container');
             
@@ -349,7 +365,7 @@
                 
                 imgViewer.src = `pdfs/png_${imageIndex}.png`;
                 imgViewer.className = ""; // Remove any classes
-                index = imageIndex;
+                index = imageIndex; // Store the index (even if in sort mode, useful for comparison)
                 
                 // Add fade in effect
                 setTimeout(() => {
@@ -359,12 +375,15 @@
             }, 200);
         }
 
+        // Unified Previous function
         function prevImage() {
             if (isTransitioning) return;
             
             if (currentMode === "vignettes") {
                 prevVignette();
-            } else {
+            } else if (currentMode === "sort") {
+                prevSort();
+            } else { // Default to ways
                 if (index > 0) {
                     index--;
                     loadImage(index);
@@ -372,17 +391,27 @@
             }
         }
 
+        // Unified Next function
         function nextImage() {
             if (isTransitioning) return;
             
             if (currentMode === "vignettes") {
                 nextVignette();
-            } else {
-                index = (index < totalImages) ? index + 1 : 0;
-                loadImage(index);
+            } else if (currentMode === "sort") {
+                nextSort();
+            } else { // Default to ways
+                 // Special handling for navigating away from png_0
+                if (index === 0) {
+                    index = 3; // Go to first Way image
+                    loadImage(index);
+                } else {
+                    index = (index < totalImages) ? index + 1 : 0;
+                    loadImage(index);
+                }
             }
         }
         
+        // Vignette navigation
         function prevVignette() {
             if (vignetteIndex > 0) {
                 vignetteIndex--;
@@ -401,6 +430,22 @@
             loadVignette(vignettes[idx].filename);
         }
 
+        // Sort By navigation
+        function prevSort() {
+            if (sortIndex > 0) {
+                sortIndex--;
+                loadImage(sortBySet[sortIndex]);
+            }
+        }
+
+        function nextSort() {
+            if (sortIndex < sortBySet.length - 1) {
+                sortIndex++;
+                loadImage(sortBySet[sortIndex]);
+            }
+        }
+
+        // Dropdown toggle
         function toggleDropdown(id, tabElement) {
             const dropdown = document.getElementById(id);
             const isActive = dropdown.classList.contains('show');
@@ -416,10 +461,11 @@
                 
                 // Position dropdown under the tab
                 const tabRect = tabElement.getBoundingClientRect();
-                dropdown.style.left = (tabRect.left + tabRect.width/2 - 150) + 'px';
+                dropdown.style.left = (tabRect.left + tabRect.width/2 - 150) + 'px'; // Adjust centering offset
             }
         }
         
+        // Close all dropdowns utility
         function closeAllDropdowns() {
             // Remove active class from all tabs
             document.querySelectorAll('.tab').forEach(tab => {
@@ -434,6 +480,7 @@
             tabBar.classList.remove('active');
         }
 
+        // Load Vignette images
         function loadVignette(name) {
             if (isTransitioning) return;
             isTransitioning = true;
@@ -443,7 +490,7 @@
             
             // Find the index of this vignette in our array
             vignetteIndex = vignettes.findIndex(v => v.filename === name);
-            if (vignetteIndex === -1) vignetteIndex = 0;
+            if (vignetteIndex === -1) vignetteIndex = 0; // Default to first if not found
             
             let imgViewer = document.getElementById('image-viewer');
             let container = document.getElementById('image-container');
@@ -456,7 +503,7 @@
             
             setTimeout(() => {
                 container.style.background = "white";
-                imgViewer.style.width = "98vw";
+                imgViewer.style.width = "98vw"; // Use dimensions from loadImage
                 imgViewer.style.height = "98vh";
                 imgViewer.style.objectFit = "contain";
                 
@@ -484,7 +531,7 @@
             }
         });
         
-        // Navigation on click
+        // Navigation on click (uses the unified next/prev functions)
         container.addEventListener('click', function(e) {
             // Don't navigate if clicking on tab bar or its children
             if (e.target.closest('.tab-trigger-area') || e.target.closest('.dropdown-container')) {
@@ -495,11 +542,19 @@
             const containerWidth = container.offsetWidth;
             
             if (x < containerWidth / 2) {
-                if (index > 0) {
+                 // Only allow prev if not on the very first image in the respective mode
+                 if ((currentMode === 'ways' && index > 0) ||
+                     (currentMode === 'vignettes' && vignetteIndex > 0) ||
+                     (currentMode === 'sort' && sortIndex > 0)) {
                     prevImage();
                 }
             } else {
-                nextImage();
+                 // Allow next unless on the last image of the respective mode
+                 if ((currentMode === 'ways' && index < totalImages) ||
+                     (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
+                     (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
+                    nextImage();
+                 }
             }
         });
 
@@ -511,9 +566,24 @@
             }
         });
 
+        // Keyboard navigation (uses the unified next/prev functions)
         document.addEventListener("keydown", function(event) {
-            if (event.key === "ArrowLeft") prevImage();
-            if (event.key === "ArrowRight") nextImage();
+            if (event.key === "ArrowLeft") {
+                // Only allow prev if not on the very first image in the respective mode
+                 if ((currentMode === 'ways' && index > 0) ||
+                     (currentMode === 'vignettes' && vignetteIndex > 0) ||
+                     (currentMode === 'sort' && sortIndex > 0)) {
+                    prevImage();
+                }
+            }
+            if (event.key === "ArrowRight") {
+                 // Allow next unless on the last image of the respective mode
+                 if ((currentMode === 'ways' && index < totalImages) ||
+                     (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
+                     (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
+                    nextImage();
+                 }
+            }
             if (event.key === "Escape") closeAllDropdowns();
         });
 
