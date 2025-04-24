@@ -11,6 +11,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Source Serif Pro', serif; }
         body { background: black; text-align: center; overflow: hidden; position: relative; color: white; }
         
+        #node-preview {
+            display: none; /* Hidden by default */
+            position: fixed; /* Position relative to the viewport */
+            background-color: #007bff; /* Blue background */
+            color: white; /* White text */
+            padding: 10px 15px; /* Padding similar to tabs */
+            border-radius: 25px; /* Rounded corners like tabs */
+            font-size: 14px; /* Font size */
+            font-weight: 400; /* Font weight */
+            z-index: 1001; /* Ensure it's above the image */
+            pointer-events: none; /* Prevent it from blocking clicks */
+            white-space: nowrap; /* Prevent text wrapping */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
         .container { 
             width: 100vw; 
             height: 100vh; 
@@ -198,6 +215,8 @@
     </style>
 </head>
 <body>
+    <div id="node-preview"></div>
+
     <div class="tab-trigger-area">
         <div class="tab-bar">
             <div class="tabs">
@@ -319,38 +338,38 @@
                 {wayIdentifier: "10", x: 0.890, y: 0.624, radius: 0.05}
             ],
             'Cafeteria': [
-                {wayIdentifier: "11", x: 0.113, y: 0.385, radius: 0.05},
-                {wayIdentifier: "18", x: 0.049, y: 0.643, radius: 0.05},
-                {wayIdentifier: "1", x: 0.203, y: 0.849, radius: 0.05},
-                {wayIdentifier: "13", x: 0.299, y: 0.576, radius: 0.05},
-                {wayIdentifier: "21", x: 0.463, y: 0.473, radius: 0.05},
-                {wayIdentifier: "18", x: 0.842, y: 0.755, radius: 0.05}
+                {wayIdentifier: "11b", x: 0.127, y: 0.392, radius: 0.05},
+                {wayIdentifier: "18a", x: 0.070, y: 0.644, radius: 0.05},
+                {wayIdentifier: "1a", x: 0.213, y: 0.855, radius: 0.05},
+                {wayIdentifier: "13b", x: 0.303, y: 0.571, radius: 0.05},
+                {wayIdentifier: "21d", x: 0.467, y: 0.474, radius: 0.05},
+                {wayIdentifier: "18b", x: 0.827, y: 0.752, radius: 0.05}
             ],
             'Art_Block': [
-                {wayIdentifier: "8", x: 0.280, y: 0.506, radius: 0.05},
-                {wayIdentifier: "17", x: 0.479, y: 0.487, radius: 0.05},
-                {wayIdentifier: "22", x: 0.616, y: 0.352, radius: 0.05},
-                {wayIdentifier: "25", x: 0.467, y: 0.638, radius: 0.05},
-                {wayIdentifier: "21", x: 0.720, y: 0.474, radius: 0.05},
-                {wayIdentifier: "25", x: 0.864, y: 0.465, radius: 0.05},
-                {wayIdentifier: "17", x: 0.724, y: 0.718, radius: 0.05},
-                {wayIdentifier: "24", x: 0.494, y: 0.839, radius: 0.05},
-                {wayIdentifier: "9", x: 0.812, y: 0.915, radius: 0.05},
-                {wayIdentifier: "24", x: 0.874, y: 0.884, radius: 0.05}
+                {wayIdentifier: "8d", x: 0.290, y: 0.506, radius: 0.05},
+                {wayIdentifier: "17a", x: 0.483, y: 0.487, radius: 0.05},
+                {wayIdentifier: "25d", x: 0.469, y: 0.630, radius: 0.05},
+                {wayIdentifier: "24a", x: 0.499, y: 0.847, radius: 0.05},
+                {wayIdentifier: "17b", x: 0.717, y: 0.717, radius: 0.05},
+                {wayIdentifier: "22a", x: 0.614, y: 0.347, radius: 0.05},
+                {wayIdentifier: "21b", x: 0.715, y: 0.481, radius: 0.05},
+                {wayIdentifier: "25c", x: 0.853, y: 0.464, radius: 0.05},
+                {wayIdentifier: "9d", x: 0.799, y: 0.925, radius: 0.05},
+                {wayIdentifier: "24c", x: 0.863, y: 0.887, radius: 0.05}
             ],
             'Classroom': [
-                {wayIdentifier: "14", x: 0.158, y: 0.416, radius: 0.05},
-                {wayIdentifier: "6", x: 0.497, y: 0.466, radius: 0.05},
-                {wayIdentifier: "14", x: 0.675, y: 0.138, radius: 0.05},
-                {wayIdentifier: "21", x: 0.648, y: 0.466, radius: 0.05},
-                {wayIdentifier: "1", x: 0.490, y: 0.532, radius: 0.05},
-                {wayIdentifier: "16", x: 0.511, y: 0.643, radius: 0.05},
-                {wayIdentifier: "19", x: 0.463, y: 0.890, radius: 0.05},
-                {wayIdentifier: "2", x: 0.692, y: 0.578, radius: 0.05},
-                {wayIdentifier: "19", x: 0.751, y: 0.466, radius: 0.05},
-                {wayIdentifier: "23", x: 0.879, y: 0.491, radius: 0.05},
-                {wayIdentifier: "13", x: 0.947, y: 0.448, radius: 0.05},
-                {wayIdentifier: "16", x: 0.765, y: 0.888, radius: 0.05}
+                {wayIdentifier: "14c", x: 0.171, y: 0.411, radius: 0.05},
+                {wayIdentifier: "6d", x: 0.496, y: 0.467, radius: 0.05},
+                {wayIdentifier: "1b", x: 0.491, y: 0.537, radius: 0.05},
+                {wayIdentifier: "19d", x: 0.465, y: 0.892, radius: 0.05},
+                {wayIdentifier: "16b", x: 0.508, y: 0.641, radius: 0.05},
+                {wayIdentifier: "21a", x: 0.640, y: 0.465, radius: 0.05},
+                {wayIdentifier: "2b", x: 0.680, y: 0.584, radius: 0.05},
+                {wayIdentifier: "19c", x: 0.749, y: 0.465, radius: 0.05},
+                {wayIdentifier: "23a", x: 0.869, y: 0.499, radius: 0.05},
+                {wayIdentifier: "13a", x: 0.933, y: 0.456, radius: 0.05},
+                {wayIdentifier: "14a", x: 0.665, y: 0.135, radius: 0.05},
+                {wayIdentifier: "16a", x: 0.757, y: 0.888, radius: 0.05}
             ],
             'Garden_View': [
                 {wayIdentifier: "4", x: 0.088, y: 0.522, radius: 0.05},
@@ -416,6 +435,100 @@
             // Will add more vignettes as we process them
         };
         
+        // Define preview text mapping
+        const previewTexts = {
+            "1a": "Height-adjustable desks (58–76 cm) and chairs (28–46 cm)",
+            "1b": "Windows placed at 50–60 cm",
+            "1c": "Urinals, toilets, and water fountains (child scaled fixtures)",
+            "2a": "Split-level layouts",
+            "2b": "U-shaped layout",
+            "2c": "Semi-circular seating",
+            "3a": "Floor-to-ceiling stalls",
+            "3b": "Warm color schemes",
+            "3c": "Individual sinks",
+            "3d": "Curtained or partitioned changing areas",
+            "4a": "High contrast, color-coded pathways",
+            "4b": "Patterns like arrows and chevrons",
+            "4c": "Blue for main corridors, yellow for specific zones",
+            "5a": "Vestibules",
+            "5b": "Visual Markers",
+            "5c": "Two-tier entry with buffer zones",
+            "5d": "Textural and color changes",
+            "6a": "Curved hallways",
+            "6b": "Clear sightlines",
+            "6c": "WWR 40–50% for public spaces",
+            "6d": "WWR 25–35% for private spaces",
+            "7a": "Acoustically treated, partitioned study pods",
+            "7b": "Color-coded zones",
+            "7c": "Staggered or cubical-style arrangements",
+            "7d": "Lockers away from high-traffic areas",
+            "8a": "Sensory gardens",
+            "8b": "Flexible seating under shaded areas",
+            "8c": "Interactive installations",
+            "8d": "Built in displays/ modular showcases",
+            "9a": "Gender-neutral bathroom",
+            "9b": "Handrails, wheelchair turning circles",
+            "9c": "Maze-like entrances",
+            "9d": "Tactile warning strips",
+            "10a": "Tactile floor paths",
+            "10b": "Sound beacons at major intersections",
+            "10c": "Sensory zones",
+            "11a": "Mesh or perforated screens",
+            "11b": "Ample natural light and airflow",
+            "11c": "High ceilings (12–15 feet)",
+            "11d": "Community displays",
+            "12a": "Sound insulated enclosures",
+            "12b": "Non-slip stain resistant flooring",
+            "12c": "Allergy free zones (15 feet away)",
+            "12d": "Hydration stations (12–18 inches)",
+            "13a": "Fractal and biomorphic patterns",
+            "13b": "Green wall of ferns and lavender",
+            "13c": "Sensory gardens with fragrant plants",
+            "13d": "Cozy nooks with air purifying plants",
+            "14a": "Roof monitors",
+            "14b": "Wind scoops",
+            "14c": "Cross-ventilating openings on opposite walls",
+            "14d": "Stack ventilation shafts",
+            "15a": "Tiered amphitheater seating",
+            "15b": "Drinkable water features",
+            "15c": "Edible plant gardens",
+            "16a": "Rounded-edge desks",
+            "16b": "Seating and standing desks",
+            "16c": "Focus rooms with adjustable seating",
+            "17a": "Moveable textured wall panels",
+            "17b": "Cork and felt",
+            "17c": "Peppermint, lavender, citrus scents",
+            "18a": "Organic desire paths",
+            "18b": "Communal cafeteria tables",
+            "18c": "Open sightlines with transparent barriers",
+            "19a": "Angled walls",
+            "19b": "Sound domes",
+            "19c": "Acoustic baffles and panels",
+            "19d": "Soft flooring materials like cork or rubber",
+            "20a": "Rounded pod style seating",
+            "20b": "Shaded weather resistant seating",
+            "20c": "Hallway alcoves / niches",
+            "20d": "Curved benches",
+            "21a": "Blue",
+            "21b": "Red",
+            "21c": "Yellow",
+            "21d": "Muted pastel tones",
+            "22a": "Sawtooth",
+            "22b": "Clerestory windows",
+            "22c": "Daylight tubes",
+            "22d": "Angled light shelves",
+            "23a": "Reading windows",
+            "23b": "Partitioned acoustic shelving units",
+            "23c": "Sound absorbing high back chairs",
+            "24a": "Learning stairs",
+            "24b": "Pivoting glass walls",
+            "24c": "Modular floor platforms",
+            "25a": "High thermal mass",
+            "25b": "Phase changing materials PCM's",
+            "25c": "Brise-soleil or adjustable louvers",
+            "25d": "Green roofs"
+        };
+
         let vignetteIndex = 0;
         let sortIndex = 0;
         let planIndex = 0;
@@ -426,7 +539,7 @@
         // Coordinate finder mode
         let coordinateFinderMode = false;
         let coordinatesList = [];
-        
+
         // Initialize the home image properly
         function initializeHome() {
             let imgViewer = document.getElementById('image-viewer');
@@ -681,43 +794,27 @@
             const dy = relY - node.y;
             return (dx * dx + dy * dy) <= (node.radius * node.radius);
         }
-        
-        // Function to draw debug circles on the image
-        function drawDebugCircles() {
-            if (!debugMode) return;
-            
+
+        // Function to find a node at the given position
+        function findNodeAtPosition(mouseX, mouseY) {
             const currentVignette = container.dataset.currentVignette;
-            if (!currentVignette || !vignetteNodes[currentVignette]) return;
-            
-            // Remove any existing debug elements
-            document.querySelectorAll('.debug-circle').forEach(el => el.remove());
+            if (!currentVignette || !vignetteNodes[currentVignette]) return null;
             
             const img = document.getElementById('image-viewer');
             const rect = img.getBoundingClientRect();
             
-            // For each node, create a div that shows the clickable area
-            vignetteNodes[currentVignette].forEach(node => {
-                const circle = document.createElement('div');
-                circle.className = 'debug-circle';
-                
-                // Position and size the circle based on relative coordinates
-                const left = node.x * rect.width + rect.left;
-                const top = node.y * rect.height + rect.top;
-                const size = node.radius * 2 * Math.min(rect.width, rect.height);
-                
-                circle.style.position = 'absolute';
-                circle.style.left = `${left - size/2}px`;
-                circle.style.top = `${top - size/2}px`;
-                circle.style.width = `${size}px`;
-                circle.style.height = `${size}px`;
-                circle.style.borderRadius = '50%';
-                circle.style.border = '2px solid red';
-                circle.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
-                circle.style.pointerEvents = 'none'; // Don't interfere with clicks
-                circle.style.zIndex = '1000';
-                
-                document.body.appendChild(circle);
-            });
+            // Calculate relative position
+            const relX = mouseX / rect.width;
+            const relY = mouseY / rect.height;
+            
+            // Check each node to see if the click is within its bounds
+            for (const node of vignetteNodes[currentVignette]) {
+                if (isClickInNode(relX, relY, node)) {
+                    return node;
+                }
+            }
+            
+            return null;
         }
 
         // Function to handle the coordinate finder tool
@@ -808,137 +905,73 @@
             }
         }
 
-        // Handle clicks on vignette nodes
-        function handleVignetteClick(e) {
-            if (currentMode !== "vignettes" || isTransitioning) return;
+        // Handle mouse movement for cursor changes and hover previews
+        container.addEventListener('mousemove', function(e) {
+            if (coordinateFinderMode) return;
             
-            // If in coordinate finder mode, use that instead
-            if (coordinateFinderMode) {
-                handleCoordinateFinder(e);
-                return;
+            // Get container dimensions
+            const containerRect = container.getBoundingClientRect();
+            const relPos = (e.clientX - containerRect.left) / containerRect.width;
+            
+            // Set cursor based on position
+            if (relPos < 0.3 || relPos > 0.7) {
+                container.style.cursor = 'pointer';
+            } else {
+                container.style.cursor = 'default';
             }
             
-            const currentVignette = container.dataset.currentVignette;
-            if (!currentVignette || !vignetteNodes[currentVignette]) return;
-            
-            // Get click position relative to the image
+            // Show hover previews for nodes in vignette mode
+            if (currentMode === "vignettes") {
+                const currentVignette = container.dataset.currentVignette;
+                if (currentVignette && vignetteNodes[currentVignette]) {
             const img = document.getElementById('image-viewer');
             const rect = img.getBoundingClientRect();
             
-            // Calculate click position as relative coordinates (0-1)
-            // This is better than using pixel coordinates because it handles resizing
-            const relX = (e.clientX - rect.left) / rect.width;
-            const relY = (e.clientY - rect.top) / rect.height;
-            
-            // Only process clicks that are within the image bounds
-            if (relX < 0 || relX > 1 || relY < 0 || relY > 1) return;
-            
-            // For debugging
-            if (debugMode) {
-                console.log(`Click at relative position: (${relX.toFixed(3)}, ${relY.toFixed(3)})`);
-            }
-            
-            // Check if click is on any node
-            const nodes = vignetteNodes[currentVignette];
-            for (const node of nodes) {
-                if (isClickInNode(relX, relY, node)) {
-                    // Calculate the PNG number based on the wayIdentifier
-                    const pngNumber = getPngFromWayIdentifier(node.wayIdentifier);
+                    // Calculate mouse position relative to the image (0-1)
+                    const relX = (e.clientX - rect.left) / rect.width;
+                    const relY = (e.clientY - rect.top) / rect.height;
                     
-                    if (debugMode) {
-                        console.log(`Node clicked: Way ${node.wayIdentifier} -> PNG ${pngNumber}`);
+                    // Check if hovering over any node
+                    const nodes = vignetteNodes[currentVignette];
+                    let hoveringNode = null;
+                    
+                    for (const node of nodes) {
+                        if (isClickInNode(relX, relY, node)) {
+                            hoveringNode = node;
+                            break;
+                        }
                     }
                     
-                    loadImage(pngNumber);
-                    return;
-                }
-            }
-        }
-
-        // Update cursor based on position
-        container.addEventListener('mousemove', function(e) {
-            if (currentMode !== "vignettes") {
-                // Regular left/right cursor behavior
-                const x = e.clientX;
-                const containerWidth = container.offsetWidth;
-                
-                if (x < containerWidth / 2) {
-                    container.style.cursor = leftArrowCursor;
-                } else {
-                    container.style.cursor = rightArrowCursor;
-                }
-                return;
-            }
-            
-            // For vignette mode, check if we're over a node
-            const currentVignette = container.dataset.currentVignette;
-            if (!currentVignette || !vignetteNodes[currentVignette]) {
-                container.style.cursor = "default";
-                return;
-            }
-            
-            const img = document.getElementById('image-viewer');
-            const rect = img.getBoundingClientRect();
-            
-            // Calculate position as relative coordinates (0-1)
-            const relX = (e.clientX - rect.left) / rect.width;
-            const relY = (e.clientY - rect.top) / rect.height;
-            
-            // Only check for nodes if we're within the image bounds
-            if (relX < 0 || relX > 1 || relY < 0 || relY > 1) {
-                container.style.cursor = "default";
-                return;
-            }
-            
-            // Check if cursor is over any node
-            const nodes = vignetteNodes[currentVignette];
-            for (const node of nodes) {
-                if (isClickInNode(relX, relY, node)) {
-                    container.style.cursor = "pointer";
-                    return;
-                }
-            }
-            
-            // Default cursor for vignette mode
-            container.style.cursor = "default";
-        });
-
-        // Navigation on click (uses the unified next/prev functions)
-        container.addEventListener('click', function(e) {
-            // Don't navigate if clicking on tab bar or its children
-            if (e.target.closest('.tab-trigger-area') || e.target.closest('.dropdown-container')) {
-                return;
-            }
-            
-            // Handle clicks on vignette nodes
-            if (currentMode === "vignettes") {
-                handleVignetteClick(e);
-                return;
-            }
-            
-            // Regular navigation
-            const x = e.clientX;
-            const containerWidth = container.offsetWidth;
-            
-            if (x < containerWidth / 2) {
-                // Only allow prev if not on the very first image in the respective mode
-                if ((currentMode === 'ways' && index > 0) ||
-                    (currentMode === 'vignettes' && vignetteIndex > 0) ||
-                    (currentMode === 'plans' && planIndex > 0) ||
-                    (currentMode === 'sort' && sortIndex > 0)) {
-                   prevImage();
+                    // Update hover preview
+                    const previewEl = document.getElementById('node-preview');
+                    if (hoveringNode) {
+                        const previewText = previewTexts[hoveringNode.wayIdentifier] || hoveringNode.wayIdentifier || "Node";
+                        previewEl.textContent = previewText;
+                        previewEl.style.left = (e.clientX + 10) + 'px';
+                        previewEl.style.top = (e.clientY + 10) + 'px';
+                        previewEl.style.display = 'block';
+                        container.style.cursor = 'pointer';
+                    } else {
+                        previewEl.style.display = 'none';
+                    }
                 }
             } else {
-                // Allow next unless on the last image of the respective mode
-                if ((currentMode === 'ways' && index < totalImages) ||
-                    (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
-                    (currentMode === 'plans' && planIndex < plans.length - 1) ||
-                    (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
-                   nextImage();
+                // Hide preview when not in vignette mode
+                const previewEl = document.getElementById('node-preview');
+                if (previewEl) {
+                    previewEl.style.display = 'none';
                 }
             }
         });
-        
+
+        // Hide preview when mouse leaves container
+        container.addEventListener('mouseleave', function() {
+            const previewEl = document.getElementById('node-preview');
+            if (previewEl) {
+                previewEl.style.display = 'none';
+            }
+        });
+
         // Add keyboard shortcuts
         document.addEventListener('keydown', function(e) {
             // Debug mode toggle with Shift+D
@@ -1001,28 +1034,59 @@
             }
         });
 
-        // Keyboard navigation (uses the unified next/prev functions)
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "ArrowLeft") {
-                // Only allow prev if not on the very first image in the respective mode
-                if ((currentMode === 'ways' && index > 0) ||
-                    (currentMode === 'vignettes' && vignetteIndex > 0) ||
-                    (currentMode === 'plans' && planIndex > 0) ||
-                    (currentMode === 'sort' && sortIndex > 0)) {
-                   prevImage();
+        // Click event for the container
+        container.addEventListener("click", function(event) {
+            if (currentMode === "vignettes") {
+                // Get mouse coordinates relative to the container
+                const containerRect = container.getBoundingClientRect();
+                const mouseX = event.clientX - containerRect.left;
+                const mouseY = event.clientY - containerRect.top;
+                
+                // Check if a node was clicked
+                const node = findNodeAtPosition(mouseX, mouseY);
+                if (node) {
+                    // Switch to ways mode and load the image
+                    currentMode = "ways";
+                    const wayId = node.wayIdentifier;
+                    loadImage(getPngFromWayIdentifier(wayId));
+                    updateControlsVisibility();
+                    return;
+                }
+                
+                // If no node was clicked, handle navigation based on position
+                const relPos = mouseX / containerRect.width;
+                if (relPos < 0.3) {
+                    // Navigate back
+                    goToPreviousImage();
+                } else if (relPos > 0.7) {
+                    // Navigate forward
+                    goToNextImage();
+                }
+            } else if (currentMode === "ways") {
+                // Navigation in ways mode
+                const containerRect = container.getBoundingClientRect();
+                const mouseX = event.clientX - containerRect.left;
+                const relPos = mouseX / containerRect.width;
+                
+                if (relPos < 0.3) {
+                    goToPreviousImage();
+                } else if (relPos > 0.7) {
+                    goToNextImage();
                 }
             }
-            if (event.key === "ArrowRight") {
-                // Allow next unless on the last image of the respective mode
-                if ((currentMode === 'ways' && index < totalImages) ||
-                    (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
-                    (currentMode === 'plans' && planIndex < plans.length - 1) ||
-                    (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
-                   nextImage();
-                }
-            }
-            if (event.key === "Escape") closeAllDropdowns();
         });
+
+        // Function to handle clicking on a vignette node
+        function handleVignetteClick(node) {
+            const wayId = node.wayIdentifier;
+            const wayData = getWayData(wayId);
+            
+            if (wayData) {
+                // Switch to the way mode and load the way
+                switchMode("ways");
+                loadWay(wayId);
+            }
+        }
 
         // Function to load plan images
         function loadPlan(planNumber) {
@@ -1067,6 +1131,59 @@
         window.addEventListener('load', function() {
             initializeHome();
         });
+
+        // Keyboard navigation (uses the unified next/prev functions)
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowLeft") {
+                // Only allow prev if not on the very first image in the respective mode
+                if ((currentMode === 'ways' && index > 0) ||
+                    (currentMode === 'vignettes' && vignetteIndex > 0) ||
+                    (currentMode === 'plans' && planIndex > 0) ||
+                    (currentMode === 'sort' && sortIndex > 0)) {
+                    prevImage();
+                }
+            }
+            if (event.key === "ArrowRight") {
+                // Allow next unless on the last image of the respective mode
+                if ((currentMode === 'ways' && index < totalImages) ||
+                    (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
+                    (currentMode === 'plans' && planIndex < plans.length - 1) ||
+                    (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
+                    nextImage();
+                }
+            }
+            if (event.key === "Escape") closeAllDropdowns();
+        });
+
+        // Function to handle navigation clicks
+        function navigateOnClick(e) {
+            // Don't navigate if clicking on tab bar or its children
+            if (e.target.closest('.tab-trigger-area') || e.target.closest('.dropdown-container')) {
+                return;
+            }
+            
+            // Regular navigation
+            const x = e.clientX;
+            const containerWidth = container.offsetWidth;
+            
+            if (x < containerWidth / 2) {
+                // Only allow prev if not on the very first image in the respective mode
+                if ((currentMode === 'ways' && index > 0) ||
+                    (currentMode === 'vignettes' && vignetteIndex > 0) ||
+                    (currentMode === 'plans' && planIndex > 0) ||
+                    (currentMode === 'sort' && sortIndex > 0)) {
+                   prevImage();
+                }
+            } else {
+                // Allow next unless on the last image of the respective mode
+                if ((currentMode === 'ways' && index < totalImages) ||
+                    (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
+                    (currentMode === 'plans' && planIndex < plans.length - 1) ||
+                    (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
+                   nextImage();
+                }
+            }
+        }
     </script>
 </body>
 </html>
