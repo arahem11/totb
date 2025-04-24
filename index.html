@@ -14,7 +14,7 @@
         #node-preview {
             display: none; /* Hidden by default */
             position: fixed; /* Position relative to the viewport */
-            background-color: #80b3c6; /* Updated color */
+            background-color: #54869e; /* Updated color */
             color: white; /* White text */
             padding: 10px 15px; /* Padding similar to tabs */
             border-radius: 25px; /* Rounded corners like tabs */
@@ -217,6 +217,41 @@
                 max-height: 80vh;
             }
         }
+        
+        .external-link-button {
+            position: absolute;
+            display: none;
+            background-color: #666666; /* Changed to grey */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-family: 'Source Serif Pro', serif;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0;
+            bottom: 50px;
+            right: 50px;
+        }
+        
+        .external-link-button:hover {
+            background-color: #444444;
+            transform: translateY(-2px);
+        }
+        
+        .hover-trigger {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 450px;
+            height: 450px;
+            z-index: 99;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -301,6 +336,8 @@
             <img id="image-viewer" src="pdfs/png_0.png">
         </div>
     </div>
+    
+    <a href="https://pdf.sciencedirectassets.com/271434/1-s2.0-S0360132315X00047/1-s2.0-S0360132315000700/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHQaCXVzLWVhc3QtMSJGMEQCIBDZE1lUcQJ%2FVuIIntfErER8%2FhamM9GSs9EY1TM4WxJBAiAkSL7HUGYj9zP10NeztHX9nm6vtJWM7pn9ojcYepj%2BCSq8BQj8%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAUaDDA1OTAwMzU0Njg2NSIMsKAxl6OmP6h3KqnbKpAF2LvUAEFPb1j2YEAorK1k2%2FFeL%2FdtW7kYR%2FibtIBIwWxYlWHggpKqDlsnCtjK5V9rI0zBqBMqNvpaTafaQiOobXXHfKLCu%2FL6VaJApVlVjkGVgnNl8O2ecg6kQ8lFk8TdV29IlxFiK2VnF6QcnwCF6H0IKVntNYdOWU6Z0WIFgcQI%2BKKd3Qxled3qCpSJSpIQThavrJdycJexHGkRZJwbMQfPXxZMZF8PRABvrY4LhVLAS%2F%2FBTXZY5kWVhQnG81V1K657VTk9SlL5knJYqQFPfwfMHaQtTr1%2FyTYbg81RDu1GsCseM9jcDOLAGiW5BvZidPVPlbwSC%2BEAKRmjHUf3lQ8YJELvTUZhkPBLrPozTy9y9hf7P%2BXlTYQi1sKTn%2FysmaULmmaDy036WK5X%2FVfFs9UoeDHW%2FDZblzXUeZeFjq5BHvxyN%2F9HADApLAYgIwjIQotU7W42jLbKLbllCa9Egm8BezIaNJuUP%2Bt73C6v5DNlNvqIUUxRPB4cQzOGLuj5r%2Fw0FVd76Q4w42B9dZ365ePOWFCVqMMBAlXBzdWATgtcbqR1%2FCoG6ACOu3d2pDfQyu15IkYq24kPfEZS1Cj3GNWqwkaakm5cbKZAYzIgJzjGPVp5PMN9SmzTADngYFxoTeViMYWiR3xFjVo1v%2FuhjdR7Me2a03PHB6Sadhuqec%2BRgnIARKx%2F52lpiedGzeRfPHWmb7voYeklCbw6VmWbjH8gWD6nkg6LSgfN7zo49xkPCdLkMRyJmL9NVh3jGU98EH1a9ZWCLX49v7ibk%2BLielfRCEOFo8ZibPS3slWuEON7Z2lccy%2BB5fMaCAk%2BBk5GYI27NmCjU5JEFmOlOPPVu1I8SK9fcnJZ7QFIPUhhKaowudumwAY6sgGbcyHHayabJzZObZJTgVNewx6m0pAPFNWPzVtosQzutwnoAq80ubhhr9msluIm0F3BpNYTuDFtO%2BNfFlKUpk6SiOvJjNKiI45nwdmB5AP0GF8mBGJl6xddGiyW7atrsteSZ8N3WwAusDCAVjVNUfJHXJANDORNRBO6UTaFtENeJBsV9Z7Kr8Vh4BQzNg0IzOatnKiTpbe1SE1xpNCs7xWFwdJehQIhYHuitjLDfxNPHUyt&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250424T040908Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYYRVXD42B%2F20250424%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=89508f2873749424f3dbdb51a38176c4713047ceaec410c8320e4b94c2d206ec&hash=8b6662de5690bee58fc251d2dae8976ee5ff9aeabe9b270331e9886123cba77f&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0360132315000700&tid=spdf-980e9b40-ae22-4bbc-b1aa-f0c3cc0f9d00&sid=5bb2b37b3492914e687986505e844b18dd49gxrqa&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=19025d5c545d00075152&rr=9352be556df6841d&cc=ca" target="_blank" id="external-link" class="external-link-button">View Research Paper</a>
     
     <script>
         let totalImages = 52;
@@ -591,6 +628,18 @@
             
             // Add fade out effect
             imgViewer.style.opacity = '0.3';
+            
+            // Handle the external link and hover trigger visibility
+            const externalLink = document.getElementById('external-link');
+            const hoverTrigger = document.querySelector('.hover-trigger') || createHoverTrigger();
+            
+            if (imageIndex === 5) {
+                // Only show the hover trigger area for png_5.png
+                hoverTrigger.style.display = 'block';
+            } else {
+                hoverTrigger.style.display = 'none';
+                externalLink.style.display = 'none';
+            }
             
             setTimeout(() => {
                 if (imageIndex === 0) {
@@ -1223,6 +1272,35 @@
                    nextImage();
                 }
             }
+        }
+
+        // Create hover trigger area for the external link
+        function createHoverTrigger() {
+            const trigger = document.createElement('div');
+            trigger.className = 'hover-trigger';
+            document.body.appendChild(trigger);
+            
+            // Show link on hover
+            trigger.addEventListener('mouseenter', function() {
+                const externalLink = document.getElementById('external-link');
+                if (index === 5) { // Only show if we're on png_5.png
+                    externalLink.style.display = 'block';
+                    setTimeout(() => {
+                        externalLink.style.opacity = '1';
+                    }, 50);
+                }
+            });
+            
+            // Hide link when mouse leaves the area
+            trigger.addEventListener('mouseleave', function() {
+                const externalLink = document.getElementById('external-link');
+                externalLink.style.opacity = '0';
+                setTimeout(() => {
+                    externalLink.style.display = 'none';
+                }, 300);
+            });
+            
+            return trigger;
         }
     </script>
 </body>
