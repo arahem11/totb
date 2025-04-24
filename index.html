@@ -247,25 +247,29 @@
     </ul>
     
     <ul class="dropdown-container dropdown" id="practice-menu">
-        <li style="font-weight: 600; pointer-events: none; color: #555;">Phase 1</li>
+        <li style="font-weight: 600; color: #F37F80; cursor: pointer;" onclick="loadPlan(0)">Existing Conditions</li>
+        
+        <li style="font-weight: 600; color: #F37F80; margin-top: 15px; cursor: pointer;" onclick="loadPlan(1)">Phase 1</li>
         <li onclick="loadVignette('Cafeteria')">Cafeteria</li>
         <li onclick="loadVignette('Art_Block')">Art Block</li>
         <li onclick="loadVignette('Classroom')">Classroom</li>
         
-        <li style="font-weight: 600; pointer-events: none; color: #555; margin-top: 15px;">Phase 2</li>
+        <li style="font-weight: 600; color: #F37F80; margin-top: 15px; cursor: pointer;" onclick="loadPlan(2)">Phase 2</li>
         <li onclick="loadVignette('Garden_View')">Garden View</li>
         <li onclick="loadVignette('Outdoor_Classroom')">Outdoor Classroom</li>
         <li onclick="loadVignette('Washroom')">Washroom</li>
         
-        <li style="font-weight: 600; pointer-events: none; color: #555; margin-top: 15px;">Phase 3</li>
+        <li style="font-weight: 600; color: #F37F80; margin-top: 15px; cursor: pointer;" onclick="loadPlan(3)">Phase 3</li>
         <li onclick="loadVignette('Football_Field')">Football Field</li>
         <li onclick="loadVignette('Multipurpose_Hall')">Multipurpose Hall</li>
         <li onclick="loadVignette('Connection point_Canteen')">Connection point + Canteen</li>
         
-        <li style="font-weight: 600; pointer-events: none; color: #555; margin-top: 15px;">Phase 4</li>
+        <li style="font-weight: 600; color: #F37F80; margin-top: 15px; cursor: pointer;" onclick="loadPlan(4)">Phase 4</li>
         <li onclick="loadVignette('Interactive_Play_Area')">Interactive Play Area</li>
         <li onclick="loadVignette('Chabutra_and_Study_Pods')">Chabutra and Study Pods</li>
         <li onclick="loadVignette('Amphitheater_space')">Amphitheater space</li>
+        
+        <li style="font-weight: 600; color: #F37F80; margin-top: 15px; cursor: pointer;" onclick="loadPlan(5)">Final Proposal</li>
     </ul>
     
     <div class="container" id="image-container">
@@ -300,117 +304,121 @@
             {phase: 4, name: 'Amphitheater space', filename: 'Amphitheater_space'}
         ];
         
+        // Define the "Sort By" set for navigation
+        const sortBySet = [53, 54, 55, 56, 57];
+
+        // Define plans for navigation
+        const plans = [0, 1, 2, 3, 4, 5];
+        
         // Define clickable areas for each vignette image (nodes)
         const vignetteNodes = {
             'Amphitheater_space': [
-                {wayNumber: 15, x: 0.319, y: 0.570, radius: 0.05},
-                {wayNumber: 13, x: 0.523, y: 0.737, radius: 0.05},
-                {wayNumber: 20, x: 0.852, y: 0.821, radius: 0.05},
-                {wayNumber: 10, x: 0.890, y: 0.624, radius: 0.05}
+                {wayIdentifier: "15", x: 0.319, y: 0.570, radius: 0.05},
+                {wayIdentifier: "13", x: 0.523, y: 0.737, radius: 0.05},
+                {wayIdentifier: "20", x: 0.852, y: 0.821, radius: 0.05},
+                {wayIdentifier: "10", x: 0.890, y: 0.624, radius: 0.05}
             ],
             'Cafeteria': [
-                {wayNumber: 11, x: 0.113, y: 0.385, radius: 0.05},
-                {wayNumber: 18, x: 0.049, y: 0.643, radius: 0.05},
-                {wayNumber: 1, x: 0.203, y: 0.849, radius: 0.05},
-                {wayNumber: 13, x: 0.299, y: 0.576, radius: 0.05},
-                {wayNumber: 21, x: 0.463, y: 0.473, radius: 0.05},
-                {wayNumber: 18, x: 0.842, y: 0.755, radius: 0.05}
+                {wayIdentifier: "11", x: 0.113, y: 0.385, radius: 0.05},
+                {wayIdentifier: "18", x: 0.049, y: 0.643, radius: 0.05},
+                {wayIdentifier: "1", x: 0.203, y: 0.849, radius: 0.05},
+                {wayIdentifier: "13", x: 0.299, y: 0.576, radius: 0.05},
+                {wayIdentifier: "21", x: 0.463, y: 0.473, radius: 0.05},
+                {wayIdentifier: "18", x: 0.842, y: 0.755, radius: 0.05}
             ],
             'Art_Block': [
-                {wayNumber: 8, x: 0.280, y: 0.506, radius: 0.05},
-                {wayNumber: 17, x: 0.479, y: 0.487, radius: 0.05},
-                {wayNumber: 22, x: 0.616, y: 0.352, radius: 0.05},
-                {wayNumber: 25, x: 0.467, y: 0.638, radius: 0.05},
-                {wayNumber: 21, x: 0.720, y: 0.474, radius: 0.05},
-                {wayNumber: 25, x: 0.864, y: 0.465, radius: 0.05},
-                {wayNumber: 17, x: 0.724, y: 0.718, radius: 0.05},
-                {wayNumber: 24, x: 0.494, y: 0.839, radius: 0.05},
-                {wayNumber: 9, x: 0.812, y: 0.915, radius: 0.05},
-                {wayNumber: 24, x: 0.874, y: 0.884, radius: 0.05}
+                {wayIdentifier: "8", x: 0.280, y: 0.506, radius: 0.05},
+                {wayIdentifier: "17", x: 0.479, y: 0.487, radius: 0.05},
+                {wayIdentifier: "22", x: 0.616, y: 0.352, radius: 0.05},
+                {wayIdentifier: "25", x: 0.467, y: 0.638, radius: 0.05},
+                {wayIdentifier: "21", x: 0.720, y: 0.474, radius: 0.05},
+                {wayIdentifier: "25", x: 0.864, y: 0.465, radius: 0.05},
+                {wayIdentifier: "17", x: 0.724, y: 0.718, radius: 0.05},
+                {wayIdentifier: "24", x: 0.494, y: 0.839, radius: 0.05},
+                {wayIdentifier: "9", x: 0.812, y: 0.915, radius: 0.05},
+                {wayIdentifier: "24", x: 0.874, y: 0.884, radius: 0.05}
             ],
             'Classroom': [
-                {wayNumber: 14, x: 0.158, y: 0.416, radius: 0.05},
-                {wayNumber: 6, x: 0.497, y: 0.466, radius: 0.05},
-                {wayNumber: 14, x: 0.675, y: 0.138, radius: 0.05},
-                {wayNumber: 21, x: 0.648, y: 0.466, radius: 0.05},
-                {wayNumber: 1, x: 0.490, y: 0.532, radius: 0.05},
-                {wayNumber: 16, x: 0.511, y: 0.643, radius: 0.05},
-                {wayNumber: 19, x: 0.463, y: 0.890, radius: 0.05},
-                {wayNumber: 2, x: 0.692, y: 0.578, radius: 0.05},
-                {wayNumber: 19, x: 0.751, y: 0.466, radius: 0.05},
-                {wayNumber: 23, x: 0.879, y: 0.491, radius: 0.05},
-                {wayNumber: 13, x: 0.947, y: 0.448, radius: 0.05},
-                {wayNumber: 16, x: 0.765, y: 0.888, radius: 0.05}
+                {wayIdentifier: "14", x: 0.158, y: 0.416, radius: 0.05},
+                {wayIdentifier: "6", x: 0.497, y: 0.466, radius: 0.05},
+                {wayIdentifier: "14", x: 0.675, y: 0.138, radius: 0.05},
+                {wayIdentifier: "21", x: 0.648, y: 0.466, radius: 0.05},
+                {wayIdentifier: "1", x: 0.490, y: 0.532, radius: 0.05},
+                {wayIdentifier: "16", x: 0.511, y: 0.643, radius: 0.05},
+                {wayIdentifier: "19", x: 0.463, y: 0.890, radius: 0.05},
+                {wayIdentifier: "2", x: 0.692, y: 0.578, radius: 0.05},
+                {wayIdentifier: "19", x: 0.751, y: 0.466, radius: 0.05},
+                {wayIdentifier: "23", x: 0.879, y: 0.491, radius: 0.05},
+                {wayIdentifier: "13", x: 0.947, y: 0.448, radius: 0.05},
+                {wayIdentifier: "16", x: 0.765, y: 0.888, radius: 0.05}
             ],
             'Garden_View': [
-                {wayNumber: 4, x: 0.088, y: 0.522, radius: 0.05},
-                {wayNumber: 11, x: 0.314, y: 0.346, radius: 0.05},
-                {wayNumber: 15, x: 0.699, y: 0.678, radius: 0.05},
-                {wayNumber: 13, x: 0.715, y: 0.420, radius: 0.05},
-                {wayNumber: 15, x: 0.739, y: 0.598, radius: 0.05},
-                {wayNumber: 17, x: 0.830, y: 0.521, radius: 0.05}
+                {wayIdentifier: "4", x: 0.088, y: 0.522, radius: 0.05},
+                {wayIdentifier: "11", x: 0.314, y: 0.346, radius: 0.05},
+                {wayIdentifier: "15", x: 0.699, y: 0.678, radius: 0.05},
+                {wayIdentifier: "13", x: 0.715, y: 0.420, radius: 0.05},
+                {wayIdentifier: "15", x: 0.739, y: 0.598, radius: 0.05},
+                {wayIdentifier: "17", x: 0.830, y: 0.521, radius: 0.05}
             ],
             'Outdoor_Classroom': [
-                {wayNumber: 21, x: 0.277, y: 0.700, radius: 0.05},
-                {wayNumber: 2, x: 0.347, y: 0.710, radius: 0.05},
-                {wayNumber: 20, x: 0.501, y: 0.577, radius: 0.05},
-                {wayNumber: 2, x: 0.665, y: 0.793, radius: 0.05},
-                {wayNumber: 8, x: 0.933, y: 0.795, radius: 0.05}
+                {wayIdentifier: "21", x: 0.277, y: 0.700, radius: 0.05},
+                {wayIdentifier: "2", x: 0.347, y: 0.710, radius: 0.05},
+                {wayIdentifier: "20", x: 0.501, y: 0.577, radius: 0.05},
+                {wayIdentifier: "2", x: 0.665, y: 0.793, radius: 0.05},
+                {wayIdentifier: "8", x: 0.933, y: 0.795, radius: 0.05}
             ],
             'Washroom': [
-                {wayNumber: 9, x: 0.210, y: 0.565, radius: 0.05},
-                {wayNumber: 1, x: 0.111, y: 0.804, radius: 0.05},
-                {wayNumber: 3, x: 0.558, y: 0.568, radius: 0.05},
-                {wayNumber: 3, x: 0.518, y: 0.818, radius: 0.05},
-                {wayNumber: 9, x: 0.738, y: 0.762, radius: 0.05},
-                {wayNumber: 3, x: 0.856, y: 0.628, radius: 0.05},
-                {wayNumber: 3, x: 0.947, y: 0.618, radius: 0.05}
+                {wayIdentifier: "9", x: 0.210, y: 0.565, radius: 0.05},
+                {wayIdentifier: "1", x: 0.111, y: 0.804, radius: 0.05},
+                {wayIdentifier: "3", x: 0.558, y: 0.568, radius: 0.05},
+                {wayIdentifier: "3", x: 0.518, y: 0.818, radius: 0.05},
+                {wayIdentifier: "9", x: 0.738, y: 0.762, radius: 0.05},
+                {wayIdentifier: "3", x: 0.856, y: 0.628, radius: 0.05},
+                {wayIdentifier: "3", x: 0.947, y: 0.618, radius: 0.05}
             ],
             'Football_Field': [
-                {wayNumber: 8, x: 0.222, y: 0.712, radius: 0.05},
-                {wayNumber: 6, x: 0.753, y: 0.537, radius: 0.05},
-                {wayNumber: 12, x: 0.849, y: 0.611, radius: 0.05}
+                {wayIdentifier: "8", x: 0.222, y: 0.712, radius: 0.05},
+                {wayIdentifier: "6", x: 0.753, y: 0.537, radius: 0.05},
+                {wayIdentifier: "12", x: 0.849, y: 0.611, radius: 0.05}
             ],
             'Multipurpose_Hall': [
-                {wayNumber: 25, x: 0.360, y: 0.391, radius: 0.05},
-                {wayNumber: 11, x: 0.499, y: 0.370, radius: 0.05},
-                {wayNumber: 22, x: 0.586, y: 0.185, radius: 0.05},
-                {wayNumber: 7, x: 0.466, y: 0.638, radius: 0.05},
-                {wayNumber: 6, x: 0.886, y: 0.557, radius: 0.05},
-                {wayNumber: 18, x: 0.887, y: 0.621, radius: 0.05},
-                {wayNumber: 12, x: 0.885, y: 0.904, radius: 0.05}
+                {wayIdentifier: "25", x: 0.360, y: 0.391, radius: 0.05},
+                {wayIdentifier: "11", x: 0.499, y: 0.370, radius: 0.05},
+                {wayIdentifier: "22", x: 0.586, y: 0.185, radius: 0.05},
+                {wayIdentifier: "7", x: 0.466, y: 0.638, radius: 0.05},
+                {wayIdentifier: "6", x: 0.886, y: 0.557, radius: 0.05},
+                {wayIdentifier: "18", x: 0.887, y: 0.621, radius: 0.05},
+                {wayIdentifier: "12", x: 0.885, y: 0.904, radius: 0.05}
             ],
             'Connection point_Canteen': [
-                {wayNumber: 11, x: 0.717, y: 0.317, radius: 0.05},
-                {wayNumber: 20, x: 0.578, y: 0.612, radius: 0.05},
-                {wayNumber: 5, x: 0.524, y: 0.759, radius: 0.05},
-                {wayNumber: 5, x: 0.449, y: 0.828, radius: 0.05},
-                {wayNumber: 6, x: 0.138, y: 0.879, radius: 0.05},
-                {wayNumber: 10, x: 0.547, y: 0.879, radius: 0.05},
-                {wayNumber: 20, x: 0.802, y: 0.901, radius: 0.05}
+                {wayIdentifier: "11", x: 0.717, y: 0.317, radius: 0.05},
+                {wayIdentifier: "20", x: 0.578, y: 0.612, radius: 0.05},
+                {wayIdentifier: "5", x: 0.524, y: 0.759, radius: 0.05},
+                {wayIdentifier: "5", x: 0.449, y: 0.828, radius: 0.05},
+                {wayIdentifier: "6", x: 0.138, y: 0.879, radius: 0.05},
+                {wayIdentifier: "10", x: 0.547, y: 0.879, radius: 0.05},
+                {wayIdentifier: "20", x: 0.802, y: 0.901, radius: 0.05}
             ],
             'Interactive_Play_Area': [
-                {wayNumber: 7, x: 0.349, y: 0.383, radius: 0.05},
-                {wayNumber: 20, x: 0.550, y: 0.373, radius: 0.05},
-                {wayNumber: 8, x: 0.564, y: 0.696, radius: 0.05},
-                {wayNumber: 4, x: 0.849, y: 0.901, radius: 0.05}
+                {wayIdentifier: "7", x: 0.349, y: 0.383, radius: 0.05},
+                {wayIdentifier: "20", x: 0.550, y: 0.373, radius: 0.05},
+                {wayIdentifier: "8", x: 0.564, y: 0.696, radius: 0.05},
+                {wayIdentifier: "4", x: 0.849, y: 0.901, radius: 0.05}
             ],
             'Chabutra_and_Study_Pods': [
-                {wayNumber: 13, x: 0.244, y: 0.677, radius: 0.05},
-                {wayNumber: 12, x: 0.451, y: 0.568, radius: 0.05},
-                {wayNumber: 7, x: 0.613, y: 0.598, radius: 0.05},
-                {wayNumber: 19, x: 0.919, y: 0.591, radius: 0.05},
-                {wayNumber: 16, x: 0.947, y: 0.661, radius: 0.05},
-                {wayNumber: 5, x: 0.899, y: 0.789, radius: 0.05}
+                {wayIdentifier: "13", x: 0.244, y: 0.677, radius: 0.05},
+                {wayIdentifier: "12", x: 0.451, y: 0.568, radius: 0.05},
+                {wayIdentifier: "7", x: 0.613, y: 0.598, radius: 0.05},
+                {wayIdentifier: "19", x: 0.919, y: 0.591, radius: 0.05},
+                {wayIdentifier: "16", x: 0.947, y: 0.661, radius: 0.05},
+                {wayIdentifier: "5", x: 0.899, y: 0.789, radius: 0.05}
             ]
             // Will add more vignettes as we process them
         };
         
-        // Define the "Sort By" set for navigation
-        const sortBySet = [53, 54, 55, 56, 57];
-        
         let vignetteIndex = 0;
         let sortIndex = 0;
+        let planIndex = 0;
 
         // Debug mode to show clickable areas
         let debugMode = false;
@@ -496,6 +504,8 @@
                 prevVignette();
             } else if (currentMode === "sort") {
                 prevSort();
+            } else if (currentMode === "plans") {
+                prevPlan();
             } else { // Default to ways
                 if (index > 0) {
                     index--;
@@ -512,6 +522,8 @@
                 nextVignette();
             } else if (currentMode === "sort") {
                 nextSort();
+            } else if (currentMode === "plans") {
+                nextPlan();
             } else { // Default to ways
                  // Special handling for navigating away from png_0
                 if (index === 0) {
@@ -555,6 +567,21 @@
             if (sortIndex < sortBySet.length - 1) {
                 sortIndex++;
                 loadImage(sortBySet[sortIndex]);
+            }
+        }
+
+        // Plan navigation
+        function prevPlan() {
+            if (planIndex > 0) {
+                planIndex--;
+                loadPlan(plans[planIndex]);
+            }
+        }
+        
+        function nextPlan() {
+            if (planIndex < plans.length - 1) {
+                planIndex++;
+                loadPlan(plans[planIndex]);
             }
         }
 
@@ -641,9 +668,11 @@
             }, 200);
         }
 
-        // Function to calculate PNG number from way number using the formula P=2(way_number)+1
-        function getPngFromWayNumber(wayNumber) {
-            return 2 * wayNumber + 1;
+        // Function to calculate PNG number from way identifier
+        function getPngFromWayIdentifier(wayIdentifier) {
+            // Extract the numeric part for the base calculation
+            const numericPart = parseInt(wayIdentifier.match(/^\d+/)[0]);
+            return 2 * numericPart + 1;
         }
 
         // Check if a click is within a circular node - uses relative coordinates
@@ -724,13 +753,12 @@
             
             document.body.appendChild(marker);
             
-            // Prompt for the way number
-            const wayNumber = prompt(`Clicked at coordinates (${relX.toFixed(3)}, ${relY.toFixed(3)}). Enter the way number (just the number, e.g. '15' for '15a'):`);
+            // Prompt for the way identifier (now accepts alphanumeric input like "3a")
+            const wayIdentifier = prompt(`Clicked at coordinates (${relX.toFixed(3)}, ${relY.toFixed(3)}). Enter the way identifier (e.g. '3a', '15b'):`);
             
-            if (wayNumber && !isNaN(parseInt(wayNumber))) {
-                const wayNum = parseInt(wayNumber);
+            if (wayIdentifier && wayIdentifier.trim() !== "") {
                 coordinatesList.push({
-                    wayNumber: wayNum,
+                    wayIdentifier: wayIdentifier.trim(),
                     x: relX,
                     y: relY,
                     radius: 0.035
@@ -741,7 +769,7 @@
                 let coordOutput = "const vignetteNodes = {\n    'Amphitheater_space': [\n";
                 
                 coordinatesList.forEach((node, index) => {
-                    coordOutput += `        {wayNumber: ${node.wayNumber}, x: ${node.x.toFixed(3)}, y: ${node.y.toFixed(3)}, radius: 0.035}`;
+                    coordOutput += `        {wayIdentifier: "${node.wayIdentifier}", x: ${node.x.toFixed(3)}, y: ${node.y.toFixed(3)}, radius: 0.035}`;
                     if (index < coordinatesList.length - 1) {
                         coordOutput += ",";
                     }
@@ -814,11 +842,11 @@
             const nodes = vignetteNodes[currentVignette];
             for (const node of nodes) {
                 if (isClickInNode(relX, relY, node)) {
-                    // Calculate the PNG number using the formula P=2(way_number)+1
-                    const pngNumber = getPngFromWayNumber(node.wayNumber);
+                    // Calculate the PNG number based on the wayIdentifier
+                    const pngNumber = getPngFromWayIdentifier(node.wayIdentifier);
                     
                     if (debugMode) {
-                        console.log(`Node clicked: Way ${node.wayNumber} -> PNG ${pngNumber}`);
+                        console.log(`Node clicked: Way ${node.wayIdentifier} -> PNG ${pngNumber}`);
                     }
                     
                     loadImage(pngNumber);
@@ -896,6 +924,7 @@
                 // Only allow prev if not on the very first image in the respective mode
                 if ((currentMode === 'ways' && index > 0) ||
                     (currentMode === 'vignettes' && vignetteIndex > 0) ||
+                    (currentMode === 'plans' && planIndex > 0) ||
                     (currentMode === 'sort' && sortIndex > 0)) {
                    prevImage();
                 }
@@ -903,6 +932,7 @@
                 // Allow next unless on the last image of the respective mode
                 if ((currentMode === 'ways' && index < totalImages) ||
                     (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
+                    (currentMode === 'plans' && planIndex < plans.length - 1) ||
                     (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
                    nextImage();
                 }
@@ -948,7 +978,7 @@
                     instructionPanel.style.zIndex = '2000';
                     instructionPanel.innerHTML = '<strong>Coordinate Finder Tool</strong><br>' +
                         'Click on the yellow circles in the image.<br><br>' +
-                        'You will be prompted to enter the way number.<br><br>' +
+                        'You will be prompted to enter the way identifier.<br><br>' +
                         'Press Shift+F to exit coordinate finder mode.';
                     document.body.appendChild(instructionPanel);
                 } else {
@@ -975,22 +1005,63 @@
         document.addEventListener("keydown", function(event) {
             if (event.key === "ArrowLeft") {
                 // Only allow prev if not on the very first image in the respective mode
-                 if ((currentMode === 'ways' && index > 0) ||
-                     (currentMode === 'vignettes' && vignetteIndex > 0) ||
-                     (currentMode === 'sort' && sortIndex > 0)) {
-                    prevImage();
+                if ((currentMode === 'ways' && index > 0) ||
+                    (currentMode === 'vignettes' && vignetteIndex > 0) ||
+                    (currentMode === 'plans' && planIndex > 0) ||
+                    (currentMode === 'sort' && sortIndex > 0)) {
+                   prevImage();
                 }
             }
             if (event.key === "ArrowRight") {
-                 // Allow next unless on the last image of the respective mode
-                 if ((currentMode === 'ways' && index < totalImages) ||
-                     (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
-                     (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
-                    nextImage();
-                 }
+                // Allow next unless on the last image of the respective mode
+                if ((currentMode === 'ways' && index < totalImages) ||
+                    (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
+                    (currentMode === 'plans' && planIndex < plans.length - 1) ||
+                    (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
+                   nextImage();
+                }
             }
             if (event.key === "Escape") closeAllDropdowns();
         });
+
+        // Function to load plan images
+        function loadPlan(planNumber) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            
+            // Set the current mode to plans
+            currentMode = "plans";
+            
+            // Find the index of this plan
+            planIndex = plans.indexOf(planNumber);
+            if (planIndex === -1) planIndex = 0; // Default to first if not found
+            
+            let imgViewer = document.getElementById('image-viewer');
+            let container = document.getElementById('image-container');
+            
+            // Close any open dropdowns
+            closeAllDropdowns();
+            
+            // Add fade out effect
+            imgViewer.style.opacity = '0.3';
+            
+            setTimeout(() => {
+                container.style.background = "white";
+                imgViewer.style.width = "105vw"; // Same as vignettes
+                imgViewer.style.height = "105vh";
+                imgViewer.style.objectFit = "contain";
+                
+                // Load the plan image
+                imgViewer.src = `Plans/plan${planNumber}.png`;
+                imgViewer.className = ""; // No frame
+                
+                // Add fade in effect
+                setTimeout(() => {
+                    imgViewer.style.opacity = '1';
+                    isTransitioning = false;
+                }, 100);
+            }, 200);
+        }
 
         // Initialize on page load
         window.addEventListener('load', function() {
