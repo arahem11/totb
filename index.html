@@ -300,12 +300,125 @@
             {phase: 4, name: 'Amphitheater space', filename: 'Amphitheater_space'}
         ];
         
+        // Define clickable areas for each vignette image (nodes)
+        const vignetteNodes = {
+            'Amphitheater_space': [
+                {wayNumber: 15, x: 0.319, y: 0.570, radius: 0.05},
+                {wayNumber: 13, x: 0.523, y: 0.737, radius: 0.05},
+                {wayNumber: 20, x: 0.852, y: 0.821, radius: 0.05},
+                {wayNumber: 10, x: 0.890, y: 0.624, radius: 0.05}
+            ],
+            'Cafeteria': [
+                {wayNumber: 11, x: 0.113, y: 0.385, radius: 0.05},
+                {wayNumber: 18, x: 0.049, y: 0.643, radius: 0.05},
+                {wayNumber: 1, x: 0.203, y: 0.849, radius: 0.05},
+                {wayNumber: 13, x: 0.299, y: 0.576, radius: 0.05},
+                {wayNumber: 21, x: 0.463, y: 0.473, radius: 0.05},
+                {wayNumber: 18, x: 0.842, y: 0.755, radius: 0.05}
+            ],
+            'Art_Block': [
+                {wayNumber: 8, x: 0.280, y: 0.506, radius: 0.05},
+                {wayNumber: 17, x: 0.479, y: 0.487, radius: 0.05},
+                {wayNumber: 22, x: 0.616, y: 0.352, radius: 0.05},
+                {wayNumber: 25, x: 0.467, y: 0.638, radius: 0.05},
+                {wayNumber: 21, x: 0.720, y: 0.474, radius: 0.05},
+                {wayNumber: 25, x: 0.864, y: 0.465, radius: 0.05},
+                {wayNumber: 17, x: 0.724, y: 0.718, radius: 0.05},
+                {wayNumber: 24, x: 0.494, y: 0.839, radius: 0.05},
+                {wayNumber: 9, x: 0.812, y: 0.915, radius: 0.05},
+                {wayNumber: 24, x: 0.874, y: 0.884, radius: 0.05}
+            ],
+            'Classroom': [
+                {wayNumber: 14, x: 0.158, y: 0.416, radius: 0.05},
+                {wayNumber: 6, x: 0.497, y: 0.466, radius: 0.05},
+                {wayNumber: 14, x: 0.675, y: 0.138, radius: 0.05},
+                {wayNumber: 21, x: 0.648, y: 0.466, radius: 0.05},
+                {wayNumber: 1, x: 0.490, y: 0.532, radius: 0.05},
+                {wayNumber: 16, x: 0.511, y: 0.643, radius: 0.05},
+                {wayNumber: 19, x: 0.463, y: 0.890, radius: 0.05},
+                {wayNumber: 2, x: 0.692, y: 0.578, radius: 0.05},
+                {wayNumber: 19, x: 0.751, y: 0.466, radius: 0.05},
+                {wayNumber: 23, x: 0.879, y: 0.491, radius: 0.05},
+                {wayNumber: 13, x: 0.947, y: 0.448, radius: 0.05},
+                {wayNumber: 16, x: 0.765, y: 0.888, radius: 0.05}
+            ],
+            'Garden_View': [
+                {wayNumber: 4, x: 0.088, y: 0.522, radius: 0.05},
+                {wayNumber: 11, x: 0.314, y: 0.346, radius: 0.05},
+                {wayNumber: 15, x: 0.699, y: 0.678, radius: 0.05},
+                {wayNumber: 13, x: 0.715, y: 0.420, radius: 0.05},
+                {wayNumber: 15, x: 0.739, y: 0.598, radius: 0.05},
+                {wayNumber: 17, x: 0.830, y: 0.521, radius: 0.05}
+            ],
+            'Outdoor_Classroom': [
+                {wayNumber: 21, x: 0.277, y: 0.700, radius: 0.05},
+                {wayNumber: 2, x: 0.347, y: 0.710, radius: 0.05},
+                {wayNumber: 20, x: 0.501, y: 0.577, radius: 0.05},
+                {wayNumber: 2, x: 0.665, y: 0.793, radius: 0.05},
+                {wayNumber: 8, x: 0.933, y: 0.795, radius: 0.05}
+            ],
+            'Washroom': [
+                {wayNumber: 9, x: 0.210, y: 0.565, radius: 0.05},
+                {wayNumber: 1, x: 0.111, y: 0.804, radius: 0.05},
+                {wayNumber: 3, x: 0.558, y: 0.568, radius: 0.05},
+                {wayNumber: 3, x: 0.518, y: 0.818, radius: 0.05},
+                {wayNumber: 9, x: 0.738, y: 0.762, radius: 0.05},
+                {wayNumber: 3, x: 0.856, y: 0.628, radius: 0.05},
+                {wayNumber: 3, x: 0.947, y: 0.618, radius: 0.05}
+            ],
+            'Football_Field': [
+                {wayNumber: 8, x: 0.222, y: 0.712, radius: 0.05},
+                {wayNumber: 6, x: 0.753, y: 0.537, radius: 0.05},
+                {wayNumber: 12, x: 0.849, y: 0.611, radius: 0.05}
+            ],
+            'Multipurpose_Hall': [
+                {wayNumber: 25, x: 0.360, y: 0.391, radius: 0.05},
+                {wayNumber: 11, x: 0.499, y: 0.370, radius: 0.05},
+                {wayNumber: 22, x: 0.586, y: 0.185, radius: 0.05},
+                {wayNumber: 7, x: 0.466, y: 0.638, radius: 0.05},
+                {wayNumber: 6, x: 0.886, y: 0.557, radius: 0.05},
+                {wayNumber: 18, x: 0.887, y: 0.621, radius: 0.05},
+                {wayNumber: 12, x: 0.885, y: 0.904, radius: 0.05}
+            ],
+            'Connection point_Canteen': [
+                {wayNumber: 11, x: 0.717, y: 0.317, radius: 0.05},
+                {wayNumber: 20, x: 0.578, y: 0.612, radius: 0.05},
+                {wayNumber: 5, x: 0.524, y: 0.759, radius: 0.05},
+                {wayNumber: 5, x: 0.449, y: 0.828, radius: 0.05},
+                {wayNumber: 6, x: 0.138, y: 0.879, radius: 0.05},
+                {wayNumber: 10, x: 0.547, y: 0.879, radius: 0.05},
+                {wayNumber: 20, x: 0.802, y: 0.901, radius: 0.05}
+            ],
+            'Interactive_Play_Area': [
+                {wayNumber: 7, x: 0.349, y: 0.383, radius: 0.05},
+                {wayNumber: 20, x: 0.550, y: 0.373, radius: 0.05},
+                {wayNumber: 8, x: 0.564, y: 0.696, radius: 0.05},
+                {wayNumber: 4, x: 0.849, y: 0.901, radius: 0.05}
+            ],
+            'Chabutra_and_Study_Pods': [
+                {wayNumber: 13, x: 0.244, y: 0.677, radius: 0.05},
+                {wayNumber: 12, x: 0.451, y: 0.568, radius: 0.05},
+                {wayNumber: 7, x: 0.613, y: 0.598, radius: 0.05},
+                {wayNumber: 19, x: 0.919, y: 0.591, radius: 0.05},
+                {wayNumber: 16, x: 0.947, y: 0.661, radius: 0.05},
+                {wayNumber: 5, x: 0.899, y: 0.789, radius: 0.05}
+            ]
+            // Will add more vignettes as we process them
+        };
+        
         // Define the "Sort By" set for navigation
         const sortBySet = [53, 54, 55, 56, 57];
         
         let vignetteIndex = 0;
         let sortIndex = 0;
 
+        // Debug mode to show clickable areas
+        let debugMode = false;
+        
+        // Coordinate finder mode
+        let coordinateFinderMode = false;
+        let coordinatesList = [];
+        
         // Initialize the home image properly
         function initializeHome() {
             let imgViewer = document.getElementById('image-viewer');
@@ -503,34 +616,265 @@
             
             setTimeout(() => {
                 container.style.background = "white";
-                imgViewer.style.width = "98vw"; // Use dimensions from loadImage
-                imgViewer.style.height = "98vh";
+                imgViewer.style.width = "105vw"; // Increased from 98vw to zoom in
+                imgViewer.style.height = "105vh"; // Increased from 98vh to zoom in
                 imgViewer.style.objectFit = "contain";
                 
                 // Load the vignette image
                 imgViewer.src = `Vignettes/${name}.jpg`;
-                imgViewer.className = "framed-image"; // Add the frame class
+                imgViewer.className = ""; // Removed framed-image class
+                
+                // Store current vignette name for click handling
+                container.dataset.currentVignette = name;
                 
                 // Add fade in effect
                 setTimeout(() => {
                     imgViewer.style.opacity = '1';
                     isTransitioning = false;
+                    
+                    // Draw debug circles if debug mode is on
+                    if (debugMode) {
+                        imgViewer.onload = drawDebugCircles;
+                        setTimeout(drawDebugCircles, 500); // Backup in case onload doesn't fire
+                    }
                 }, 100);
             }, 200);
         }
 
+        // Function to calculate PNG number from way number using the formula P=2(way_number)+1
+        function getPngFromWayNumber(wayNumber) {
+            return 2 * wayNumber + 1;
+        }
+
+        // Check if a click is within a circular node - uses relative coordinates
+        function isClickInNode(relX, relY, node) {
+            const dx = relX - node.x;
+            const dy = relY - node.y;
+            return (dx * dx + dy * dy) <= (node.radius * node.radius);
+        }
+        
+        // Function to draw debug circles on the image
+        function drawDebugCircles() {
+            if (!debugMode) return;
+            
+            const currentVignette = container.dataset.currentVignette;
+            if (!currentVignette || !vignetteNodes[currentVignette]) return;
+            
+            // Remove any existing debug elements
+            document.querySelectorAll('.debug-circle').forEach(el => el.remove());
+            
+            const img = document.getElementById('image-viewer');
+            const rect = img.getBoundingClientRect();
+            
+            // For each node, create a div that shows the clickable area
+            vignetteNodes[currentVignette].forEach(node => {
+                const circle = document.createElement('div');
+                circle.className = 'debug-circle';
+                
+                // Position and size the circle based on relative coordinates
+                const left = node.x * rect.width + rect.left;
+                const top = node.y * rect.height + rect.top;
+                const size = node.radius * 2 * Math.min(rect.width, rect.height);
+                
+                circle.style.position = 'absolute';
+                circle.style.left = `${left - size/2}px`;
+                circle.style.top = `${top - size/2}px`;
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.borderRadius = '50%';
+                circle.style.border = '2px solid red';
+                circle.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+                circle.style.pointerEvents = 'none'; // Don't interfere with clicks
+                circle.style.zIndex = '1000';
+                
+                document.body.appendChild(circle);
+            });
+        }
+
+        // Function to handle the coordinate finder tool
+        function handleCoordinateFinder(e) {
+            const img = document.getElementById('image-viewer');
+            const rect = img.getBoundingClientRect();
+            
+            // Calculate position as relative coordinates (0-1)
+            const relX = (e.clientX - rect.left) / rect.width;
+            const relY = (e.clientY - rect.top) / rect.height;
+            
+            // Only process clicks that are within the image bounds
+            if (relX < 0 || relX > 1 || relY < 0 || relY > 1) return;
+            
+            // Create a marker at the clicked position
+            const marker = document.createElement('div');
+            marker.className = 'coordinate-marker';
+            
+            // Position the marker
+            const left = relX * rect.width + rect.left;
+            const top = relY * rect.height + rect.top;
+            
+            marker.style.position = 'absolute';
+            marker.style.left = `${left - 10}px`;
+            marker.style.top = `${top - 10}px`;
+            marker.style.width = '20px';
+            marker.style.height = '20px';
+            marker.style.borderRadius = '50%';
+            marker.style.border = '2px solid yellow';
+            marker.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+            marker.style.pointerEvents = 'none';
+            marker.style.zIndex = '1000';
+            
+            document.body.appendChild(marker);
+            
+            // Prompt for the way number
+            const wayNumber = prompt(`Clicked at coordinates (${relX.toFixed(3)}, ${relY.toFixed(3)}). Enter the way number (just the number, e.g. '15' for '15a'):`);
+            
+            if (wayNumber && !isNaN(parseInt(wayNumber))) {
+                const wayNum = parseInt(wayNumber);
+                coordinatesList.push({
+                    wayNumber: wayNum,
+                    x: relX,
+                    y: relY,
+                    radius: 0.035
+                });
+                
+                // Show the current list of coordinates
+                console.log("Current coordinates:");
+                let coordOutput = "const vignetteNodes = {\n    'Amphitheater_space': [\n";
+                
+                coordinatesList.forEach((node, index) => {
+                    coordOutput += `        {wayNumber: ${node.wayNumber}, x: ${node.x.toFixed(3)}, y: ${node.y.toFixed(3)}, radius: 0.035}`;
+                    if (index < coordinatesList.length - 1) {
+                        coordOutput += ",";
+                    }
+                    coordOutput += "\n";
+                });
+                
+                coordOutput += "    ]\n};";
+                console.log(coordOutput);
+                
+                // Add a coordinates display panel if it doesn't exist
+                let coordPanel = document.getElementById('coordinate-panel');
+                if (!coordPanel) {
+                    coordPanel = document.createElement('div');
+                    coordPanel.id = 'coordinate-panel';
+                    coordPanel.style.position = 'fixed';
+                    coordPanel.style.top = '10px';
+                    coordPanel.style.right = '10px';
+                    coordPanel.style.width = '400px';
+                    coordPanel.style.padding = '15px';
+                    coordPanel.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                    coordPanel.style.color = 'white';
+                    coordPanel.style.fontFamily = 'monospace';
+                    coordPanel.style.fontSize = '12px';
+                    coordPanel.style.borderRadius = '5px';
+                    coordPanel.style.zIndex = '2000';
+                    coordPanel.style.maxHeight = '80vh';
+                    coordPanel.style.overflowY = 'auto';
+                    document.body.appendChild(coordPanel);
+                }
+                
+                // Update the panel
+                coordPanel.innerHTML = '<strong>Coordinate Finder Tool</strong><br>' +
+                    'Click on yellow circles to record coordinates.<br><br>' +
+                    'Press Shift+F to exit coordinate finder mode.<br><br>' +
+                    'Copy this to update your code:<pre>' + coordOutput + '</pre>';
+            }
+        }
+
+        // Handle clicks on vignette nodes
+        function handleVignetteClick(e) {
+            if (currentMode !== "vignettes" || isTransitioning) return;
+            
+            // If in coordinate finder mode, use that instead
+            if (coordinateFinderMode) {
+                handleCoordinateFinder(e);
+                return;
+            }
+            
+            const currentVignette = container.dataset.currentVignette;
+            if (!currentVignette || !vignetteNodes[currentVignette]) return;
+            
+            // Get click position relative to the image
+            const img = document.getElementById('image-viewer');
+            const rect = img.getBoundingClientRect();
+            
+            // Calculate click position as relative coordinates (0-1)
+            // This is better than using pixel coordinates because it handles resizing
+            const relX = (e.clientX - rect.left) / rect.width;
+            const relY = (e.clientY - rect.top) / rect.height;
+            
+            // Only process clicks that are within the image bounds
+            if (relX < 0 || relX > 1 || relY < 0 || relY > 1) return;
+            
+            // For debugging
+            if (debugMode) {
+                console.log(`Click at relative position: (${relX.toFixed(3)}, ${relY.toFixed(3)})`);
+            }
+            
+            // Check if click is on any node
+            const nodes = vignetteNodes[currentVignette];
+            for (const node of nodes) {
+                if (isClickInNode(relX, relY, node)) {
+                    // Calculate the PNG number using the formula P=2(way_number)+1
+                    const pngNumber = getPngFromWayNumber(node.wayNumber);
+                    
+                    if (debugMode) {
+                        console.log(`Node clicked: Way ${node.wayNumber} -> PNG ${pngNumber}`);
+                    }
+                    
+                    loadImage(pngNumber);
+                    return;
+                }
+            }
+        }
+
         // Update cursor based on position
         container.addEventListener('mousemove', function(e) {
-            const x = e.clientX;
-            const containerWidth = container.offsetWidth;
-            
-            if (x < containerWidth / 2) {
-                container.style.cursor = leftArrowCursor;
-            } else {
-                container.style.cursor = rightArrowCursor;
+            if (currentMode !== "vignettes") {
+                // Regular left/right cursor behavior
+                const x = e.clientX;
+                const containerWidth = container.offsetWidth;
+                
+                if (x < containerWidth / 2) {
+                    container.style.cursor = leftArrowCursor;
+                } else {
+                    container.style.cursor = rightArrowCursor;
+                }
+                return;
             }
+            
+            // For vignette mode, check if we're over a node
+            const currentVignette = container.dataset.currentVignette;
+            if (!currentVignette || !vignetteNodes[currentVignette]) {
+                container.style.cursor = "default";
+                return;
+            }
+            
+            const img = document.getElementById('image-viewer');
+            const rect = img.getBoundingClientRect();
+            
+            // Calculate position as relative coordinates (0-1)
+            const relX = (e.clientX - rect.left) / rect.width;
+            const relY = (e.clientY - rect.top) / rect.height;
+            
+            // Only check for nodes if we're within the image bounds
+            if (relX < 0 || relX > 1 || relY < 0 || relY > 1) {
+                container.style.cursor = "default";
+                return;
+            }
+            
+            // Check if cursor is over any node
+            const nodes = vignetteNodes[currentVignette];
+            for (const node of nodes) {
+                if (isClickInNode(relX, relY, node)) {
+                    container.style.cursor = "pointer";
+                    return;
+                }
+            }
+            
+            // Default cursor for vignette mode
+            container.style.cursor = "default";
         });
-        
+
         // Navigation on click (uses the unified next/prev functions)
         container.addEventListener('click', function(e) {
             // Don't navigate if clicking on tab bar or its children
@@ -538,23 +882,84 @@
                 return;
             }
             
+            // Handle clicks on vignette nodes
+            if (currentMode === "vignettes") {
+                handleVignetteClick(e);
+                return;
+            }
+            
+            // Regular navigation
             const x = e.clientX;
             const containerWidth = container.offsetWidth;
             
             if (x < containerWidth / 2) {
-                 // Only allow prev if not on the very first image in the respective mode
-                 if ((currentMode === 'ways' && index > 0) ||
-                     (currentMode === 'vignettes' && vignetteIndex > 0) ||
-                     (currentMode === 'sort' && sortIndex > 0)) {
-                    prevImage();
+                // Only allow prev if not on the very first image in the respective mode
+                if ((currentMode === 'ways' && index > 0) ||
+                    (currentMode === 'vignettes' && vignetteIndex > 0) ||
+                    (currentMode === 'sort' && sortIndex > 0)) {
+                   prevImage();
                 }
             } else {
-                 // Allow next unless on the last image of the respective mode
-                 if ((currentMode === 'ways' && index < totalImages) ||
-                     (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
-                     (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
-                    nextImage();
-                 }
+                // Allow next unless on the last image of the respective mode
+                if ((currentMode === 'ways' && index < totalImages) ||
+                    (currentMode === 'vignettes' && vignetteIndex < vignettes.length - 1) ||
+                    (currentMode === 'sort' && sortIndex < sortBySet.length - 1)) {
+                   nextImage();
+                }
+            }
+        });
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Debug mode toggle with Shift+D
+            if (e.shiftKey && e.key === 'D') {
+                debugMode = !debugMode;
+                if (debugMode) {
+                    drawDebugCircles();
+                    console.log("Debug mode enabled");
+                } else {
+                    document.querySelectorAll('.debug-circle').forEach(el => el.remove());
+                    console.log("Debug mode disabled");
+                }
+                e.preventDefault();
+            }
+            
+            // Coordinate finder mode toggle with Shift+F
+            if (e.shiftKey && e.key === 'F') {
+                coordinateFinderMode = !coordinateFinderMode;
+                
+                if (coordinateFinderMode) {
+                    console.log("Coordinate finder mode enabled. Click on the image to record coordinates.");
+                    coordinatesList = [];
+                    
+                    // Show instruction panel
+                    let instructionPanel = document.createElement('div');
+                    instructionPanel.id = 'coordinate-panel';
+                    instructionPanel.style.position = 'fixed';
+                    instructionPanel.style.top = '10px';
+                    instructionPanel.style.right = '10px';
+                    instructionPanel.style.width = '400px';
+                    instructionPanel.style.padding = '15px';
+                    instructionPanel.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                    instructionPanel.style.color = 'white';
+                    instructionPanel.style.fontFamily = 'monospace';
+                    instructionPanel.style.fontSize = '12px';
+                    instructionPanel.style.borderRadius = '5px';
+                    instructionPanel.style.zIndex = '2000';
+                    instructionPanel.innerHTML = '<strong>Coordinate Finder Tool</strong><br>' +
+                        'Click on the yellow circles in the image.<br><br>' +
+                        'You will be prompted to enter the way number.<br><br>' +
+                        'Press Shift+F to exit coordinate finder mode.';
+                    document.body.appendChild(instructionPanel);
+                } else {
+                    console.log("Coordinate finder mode disabled.");
+                    // Remove any coordinate markers
+                    document.querySelectorAll('.coordinate-marker').forEach(el => el.remove());
+                    // Remove instruction panel
+                    const panel = document.getElementById('coordinate-panel');
+                    if (panel) panel.remove();
+                }
+                e.preventDefault();
             }
         });
 
