@@ -14,7 +14,7 @@
         #node-preview {
             display: none; /* Hidden by default */
             position: fixed; /* Position relative to the viewport */
-            background-color: #007bff; /* Blue background */
+            background-color: #80b3c6; /* Updated color */
             color: white; /* White text */
             padding: 10px 15px; /* Padding similar to tabs */
             border-radius: 25px; /* Rounded corners like tabs */
@@ -36,6 +36,11 @@
             align-items: center; 
             position: relative; 
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='12' x2='5' y2='12'></line><polyline points='12 19 5 12 12 5'></polyline></svg>") 20 20, auto;
+        }
+        
+        /* Apply different cursor styles based on mode */
+        .container.vignette-mode {
+            cursor: default;
         }
         
         .image-wrapper { width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
@@ -578,6 +583,9 @@
             let imgViewer = document.getElementById('image-viewer');
             let container = document.getElementById('image-container');
             
+            // Remove vignette-mode class to restore arrow cursor
+            container.classList.remove('vignette-mode');
+            
             // Close any open dropdowns
             closeAllDropdowns();
             
@@ -747,6 +755,9 @@
             
             let imgViewer = document.getElementById('image-viewer');
             let container = document.getElementById('image-container');
+            
+            // Add vignette-mode class for cursor style
+            container.classList.add('vignette-mode');
             
             // Close any open dropdowns
             closeAllDropdowns();
@@ -924,9 +935,9 @@
             if (currentMode === "vignettes") {
                 const currentVignette = container.dataset.currentVignette;
                 if (currentVignette && vignetteNodes[currentVignette]) {
-            const img = document.getElementById('image-viewer');
-            const rect = img.getBoundingClientRect();
-            
+                    const img = document.getElementById('image-viewer');
+                    const rect = img.getBoundingClientRect();
+                    
                     // Calculate mouse position relative to the image (0-1)
                     const relX = (e.clientX - rect.left) / rect.width;
                     const relY = (e.clientY - rect.top) / rect.height;
@@ -961,14 +972,23 @@
                 if (previewEl) {
                     previewEl.style.display = 'none';
                 }
+
+                // Update cursor for non-vignette modes
+                const x = e.clientX;
+                const containerWidth = container.offsetWidth;
+                
+                if (x < containerWidth / 2) {
+                    container.style.cursor = leftArrowCursor;
+                } else {
+                    container.style.cursor = rightArrowCursor;
+                }
             }
         });
 
         // Hide preview when mouse leaves container
         container.addEventListener('mouseleave', function() {
-            const previewEl = document.getElementById('node-preview');
-            if (previewEl) {
-                previewEl.style.display = 'none';
+            if (document.getElementById('node-preview')) {
+                document.getElementById('node-preview').style.display = 'none';
             }
         });
 
@@ -1057,10 +1077,10 @@
                 const relPos = mouseX / containerRect.width;
                 if (relPos < 0.3) {
                     // Navigate back
-                    goToPreviousImage();
+                    prevImage();
                 } else if (relPos > 0.7) {
                     // Navigate forward
-                    goToNextImage();
+                    nextImage();
                 }
             } else if (currentMode === "ways") {
                 // Navigation in ways mode
@@ -1068,10 +1088,27 @@
                 const mouseX = event.clientX - containerRect.left;
                 const relPos = mouseX / containerRect.width;
                 
-                if (relPos < 0.3) {
-                    goToPreviousImage();
-                } else if (relPos > 0.7) {
-                    goToNextImage();
+                if (relPos < 0.5) {
+                    // Only allow prev if not on the very first image
+                    if (index > 0) {
+                        prevImage();
+                    }
+                } else {
+                    // Allow next unless on the last image
+                    if (index < totalImages) {
+                        nextImage();
+                    }
+                }
+            } else if (currentMode === "sort" || currentMode === "plans") {
+                // Navigation in other modes
+                const containerRect = container.getBoundingClientRect();
+                const mouseX = event.clientX - containerRect.left;
+                const relPos = mouseX / containerRect.width;
+                
+                if (relPos < 0.5) {
+                    prevImage();
+                } else {
+                    nextImage();
                 }
             }
         });
@@ -1102,6 +1139,9 @@
             
             let imgViewer = document.getElementById('image-viewer');
             let container = document.getElementById('image-container');
+            
+            // Remove vignette-mode class to restore arrow cursor
+            container.classList.remove('vignette-mode');
             
             // Close any open dropdowns
             closeAllDropdowns();
