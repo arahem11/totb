@@ -845,7 +845,8 @@
         function getPngFromWayIdentifier(wayIdentifier) {
             // Extract the numeric part for the base calculation
             const numericPart = parseInt(wayIdentifier.match(/^\d+/)[0]);
-            return 2 * numericPart + 1;
+            // Now return the original value + 1 (2n+2 instead of 2n+1)
+            return 2 * numericPart + 2;
         }
 
         // Check if a click is within a circular node - uses relative coordinates
